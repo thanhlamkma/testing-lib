@@ -1,0 +1,54 @@
+@use 'variables' as variable;
+
+// Icon sizes
+$sizes: (
+  xs: 12px,
+  sm: 14px,
+  md: 16px,
+  lg: 18px,
+  xl: 20px,
+  xxl: 24px
+);
+
+@each $size, $value in $sizes {
+  .icon-#{$size} {
+    svg {
+      width: $value;
+      min-height: $value;
+    }
+  }
+}
+
+// Title
+.comm-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+// Card
+.comm-card,
+.child-card {
+  height: 100%;
+  border: none;
+}
+
+.comm-card {
+  border-radius: 16px;
+  background: rgba(var(--bg-card) / 1);
+}
+
+.child-card {
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(var(--color-gray-100) / 1);
+
+  &.selected {
+    background: rgba(var(--color-purple-900) / 1);
+    p,
+    div,
+    span {
+      color: rgba(var(--color-white) / 1);
+    }
+  }
+}

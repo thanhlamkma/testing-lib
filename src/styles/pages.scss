@@ -1,0 +1,194 @@
+@use 'variables' as variable;
+
+/*----- Dashboard -----*/
+.dashboard-page {
+  height: 100%;
+
+  // Elements
+  .big-number {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 600;
+  }
+
+  .ant-card-body {
+    height: 100%;
+  }
+
+  .card-half-page {
+    height: calc((100% - 16px) / 2);
+  }
+
+  .custom-tag {
+    width: fit-content;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+
+    &.green-tag {
+      background: rgba(var(--color-green-100) / 1);
+      color: rgba(var(--color-green-700) / 1);
+    }
+
+    &.blue-tag {
+      background: rgba(var(--color-blue-100) / 1);
+      color: rgba(var(--color-blue-700) / 1);
+    }
+  }
+
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 9999px;
+    border: 2px solid rgba(var(--color-gray-100) / 1);
+
+    font-size: 12px;
+    color: white;
+  }
+
+  // Cards
+  .act-card {
+    overflow: hidden;
+
+    &__plat-card {
+      height: calc(100% - 322px);
+      background: rgba(var(--color-gray-100) / 1);
+      @include variable.scroll-bar;
+
+      .ant-card-head {
+        padding: 0 16px;
+        min-height: 50px;
+        border-bottom: none;
+      }
+
+      .ant-card-body {
+        height: calc(100% - 50px);
+        padding: 8px 16px;
+        overflow-y: auto;
+      }
+    }
+  }
+
+  .stat-card {
+    overflow: hidden;
+
+    &__task-card {
+      height: calc(100% - 100px);
+      background: rgba(var(--color-gray-100) / 1);
+
+      .ant-card-body {
+        padding: 16px 0;
+      }
+    }
+  }
+
+  .course-card {
+    overflow: hidden;
+
+    .avatar-container {
+      position: relative;
+      height: 40px;
+
+      .avatar {
+        position: absolute;
+
+        &:nth-child(1) {
+          z-index: 1;
+          background: red;
+        }
+
+        &:nth-child(2) {
+          z-index: 2;
+          left: 25px;
+          background: blue;
+        }
+
+        &:nth-child(3) {
+          z-index: 3;
+          left: 55px;
+          background: green;
+        }
+
+        &:nth-child(4) {
+          z-index: 4;
+          left: 85px;
+          background: rgba(var(--color-purple-900));
+        }
+      }
+    }
+
+    &__progress {
+      .ant-progress-inner,
+      .ant-progress-bg {
+        height: 40px !important;
+        border-radius: 8px;
+      }
+
+      .ant-progress-bg {
+        padding: 10px;
+        background: #fcd326;
+
+        .ant-progress-text-inner {
+          font-size: 16px;
+          font-weight: 600;
+          color: black;
+        }
+      }
+
+      .ant-progress-inner {
+        background: #fbe9a6;
+      }
+    }
+
+    &__btn.ant-btn {
+      height: 40px;
+      border: none;
+      background: rgba(var(--color-gray-900) / 1);
+
+      span {
+        color: rgba(var(--color-white));
+      }
+    }
+
+    .ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled) {
+      &:active,
+      &:hover {
+        color: rgba(var(--color-white));
+        background: rgba(var(--color-gray-900) / 1);
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .schedule-card {
+    .prev-btn,
+    .next-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 28px;
+      height: 28px;
+
+      border-radius: 9999px;
+      border: 2px solid rgba(var(--color-text) / 0.2);
+
+      cursor: pointer;
+
+      svg {
+        width: 10px;
+        height: 10px;
+      }
+
+      &:hover {
+        border: 2px solid rgba(var(--color-text) / 0.4);
+      }
+    }
+  }
+}

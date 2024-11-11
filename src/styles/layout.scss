@@ -1,0 +1,126 @@
+@use 'variables' as variable;
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+  padding: 12px;
+
+  background: rgba(var(--bg-main) / 1);
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    height: 80px;
+    padding: 16px 24px;
+
+    border-radius: 16px;
+    background: rgba(var(--bg-card) / 1);
+    font-size: 16px;
+
+    &__theme-switch {
+      height: 26px;
+
+      .ant-switch-handle {
+        width: 18px;
+        height: 18px;
+        top: 4px;
+        inset-inline-start: 3px;
+        border-radius: 100%;
+      }
+
+      &.ant-switch-checked .ant-switch-handle {
+        inset-inline-start: calc(100% - 21px);
+      }
+
+      .ant-switch-inner .ant-switch-inner-checked {
+        margin-top: 1px;
+      }
+
+      .ant-switch-inner .ant-switch-inner-unchecked {
+        margin-top: -25px;
+      }
+    }
+
+    &__menu {
+      display: flex;
+      align-items: center;
+
+      height: 100%;
+
+      border-radius: 9999px;
+      background: rgba(var(--color-gray-200) / 1);
+
+      &-item {
+        position: relative;
+        z-index: 1;
+
+        height: 100%;
+        width: 120px;
+        padding: 0 12px;
+
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 45px;
+        color: rgba(var(--color-text) / 1);
+        text-align: center;
+        text-transform: capitalize;
+
+        &:hover {
+          color: rgba(var(--color-blue-700) / 1);
+        }
+
+        &.menu-active {
+          color: rgba(var(--color-white));
+          &:hover {
+            color: rgba(var(--color-white));
+          }
+        }
+
+        .active {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+
+          height: 100%;
+          width: 120px;
+
+          background: rgba(var(--color-gray-900) / 1);
+          border-radius: 9999px;
+        }
+      }
+    }
+
+    &__lang-selection {
+      width: 40px;
+      height: 30px;
+
+      &.ant-select {
+        .ant-select-selector {
+          padding: 4px;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+
+  &-body {
+    height: calc(100% - 93px);
+  }
+}
+
+.lang-selection__popup.ant-select-dropdown {
+  .ant-select-item {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+  }
+}

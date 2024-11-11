@@ -1,0 +1,43 @@
+@use 'sass:meta';
+@use 'variables' as variable;
+
+@layer tailwind {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+html {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+a,
+section {
+  color: rgba(var(--color-text) / 1);
+}
+
+@include meta.load-css('antd-customize.scss');
+@include meta.load-css('common.scss');
+@include meta.load-css('pages.scss');
