@@ -192,3 +192,11 @@
     }
   }
 }
+
+/*----- Flow -----*/
+.flow-page {
+  height: 100%;
+  width: 100%;
+  border-radius: variable.$rounded-4;
+  background: rgba(var(--bg-card) / 1);
+}

@@ -3,6 +3,7 @@ import React from 'react';
 export const Dashboard = React.lazy(() => delayForDemo(import('@/pages/dashboard/Dashboard')));
 export const About = React.lazy(() => delayForDemo(import('@/pages/about/About')));
 export const Setting = React.lazy(() => delayForDemo(import('@/pages/setting/Setting')));
+export const Flow = React.lazy(() => delayForDemo(import('@/pages/flow/Flow')));
 
 function delayForDemo<T>(promise: Promise<T>) {
   return new Promise((resolve) => {
