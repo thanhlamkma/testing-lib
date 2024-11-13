@@ -1,30 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tempData } from '@/pages/flow/data/mock';
-import { getHierarchyLayout } from '@/pages/flow/utils/d3-hierarchy';
+import { getDagreLayout } from '@/pages/flow/utils/dagre';
 import {
   Background,
   Controls,
   Panel,
   ReactFlow,
   useEdgesState,
-  useNodesState
+  useNodesState,
+  useReactFlow
 } from '@xyflow/react';
 import { Button } from 'antd';
 import { useCallback, useEffect } from 'react';
 
 const Flow = () => {
+  const { fitView } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
 
   const onLayout = useCallback(
-    (direction?: any) => {
+    (direction: any) => {
       console.log(nodes);
-      const layouted = getHierarchyLayout(nodes, edges, { direction });
+      const layouted = getDagreLayout(nodes, edges, { direction });
 
       setNodes([...layouted.nodes]);
       setEdges([...layouted.edges]);
+
+      window.requestAnimationFrame(() => {
+        fitView();
+      });
     },
-    [nodes, edges, setNodes, setEdges]
+    [nodes, edges, setEdges, setNodes]
   );
 
   useEffect(() => {
@@ -56,9 +62,8 @@ const Flow = () => {
         fitView
       >
         <Panel className='flex gap-2' position='top-right'>
-          <Button onClick={() => onLayout()}>layout</Button>
-          <Button onClick={() => onLayout('TB')}>vertical layout</Button>
-          <Button onClick={() => onLayout('LR')}>horizontal layout</Button>
+          <Button onClick={() => onLayout('TB')}>Vertical</Button>
+          <Button onClick={() => onLayout('LR')}>Horizontal</Button>
         </Panel>
         <Background />
         <Controls />

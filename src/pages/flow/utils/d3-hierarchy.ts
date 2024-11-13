@@ -3,7 +3,7 @@ import { stratify, tree } from 'd3-hierarchy';
 
 const g = tree();
 
-export const getHierarchyLayout = (nodes: any, edges: any, options: any) => {
+export const getHierarchyLayout = (nodes: any, edges: any) => {
   if (nodes.length === 0) return { nodes, edges };
 
   const { width, height } = document

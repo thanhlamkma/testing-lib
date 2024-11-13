@@ -1,6 +1,6 @@
 import LayoutAuth from '@/layouts/LayoutAuth';
 import SignIn from '@/pages/auth/SignIn';
-import { About, Dashboard, Flow, Setting } from '@/routes/allPages';
+import { About, Dashboard, FlowProvider, Setting } from '@/routes/allPages';
 import ProtectedRoute from '@/routes/ProtectedRoute';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'flow',
-        element: <Flow />
+        element: <FlowProvider />
       }
     ]
   },

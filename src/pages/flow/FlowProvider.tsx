@@ -1,18 +1,13 @@
-import { ReactFlowProvider, useReactFlow } from '@xyflow/react';
-import { ReactNode } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Flow from '@/pages/flow/Flow';
+import { ReactFlowProvider } from '@xyflow/react';
 
-interface FlowProviderProps {
-  children: ReactNode;
-}
-
-const FlowProvider = ({ children }: FlowProviderProps) => {
-  const { fitView } = useReactFlow();
-
-  window.requestAnimationFrame(() => {
-    fitView();
-  });
-
-  return <ReactFlowProvider>{children}</ReactFlowProvider>;
+const FlowProvider = (props: any) => {
+  return (
+    <ReactFlowProvider>
+      <Flow {...props} />
+    </ReactFlowProvider>
+  );
 };
 
 export default FlowProvider;
