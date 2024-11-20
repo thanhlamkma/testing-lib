@@ -35,3 +35,23 @@
 .ant-spin .ant-spin-dot-item {
   background: rgb(37, 150, 255);
 }
+
+// Ant Button
+.ant-btn {
+  &-variant-outlined {
+    background: rgba(var(--bg-card) / 1);
+
+    &:not(:disabled):not(.ant-btn-disabled) {
+      &:hover,
+      &:active {
+        background: rgba(var(--bg-card) / 1);
+      }
+    }
+  }
+
+  &-primary {
+    span {
+      color: rgba(var(--color-white) / 1);
+    }
+  }
+}
