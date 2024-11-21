@@ -1,13 +1,14 @@
 import CommCard from '@/common/components/CommCard';
-import { downloadExcel, TableDataType } from '@/pages/test/utils/downloadExcel';
-import { Button } from 'antd';
+import { downExcelWithSheetJs, SheetDataType } from '@/pages/test/utils/sheetjs';
+import { downExcelWithXlsx, TableDataType } from '@/pages/test/utils/xlsx';
+import { Button, Flex } from 'antd';
 import { useState } from 'react';
 
 const TestPage = () => {
-  const data = useState([
-    { name: 'Alice', age: 30 },
-    { name: 'Bob', age: 25 },
-    { name: 'Charlie', age: 35 }
+  const data = useState<SheetDataType[]>([
+    { id: 1, name: 'Alice', dob: new Date(1999, 1, 2) },
+    { id: 2, name: 'Bob', dob: new Date(1999, 2, 3) },
+    { id: 3, name: 'Charlie', dob: new Date(1999, 3, 4) }
   ]);
 
   const treeData = useState([
@@ -61,8 +62,8 @@ const TestPage = () => {
     }
   ]);
 
-  const handleDownload = () => {
-    downloadExcel(
+  const handleDownloadWithXLSX = () => {
+    downExcelWithXlsx(
       {
         status: 'active'
       },
@@ -72,11 +73,21 @@ const TestPage = () => {
     );
   };
 
+  const handleDownloadWithSheetJs = () => {
+    downExcelWithSheetJs(data[0]);
+  };
+
   return (
     <CommCard>
-      <Button type='primary' onClick={handleDownload}>
-        Download Excel
-      </Button>
+      <Flex gap={16}>
+        <Button type='primary' onClick={handleDownloadWithXLSX}>
+          Download Excel with XLSX
+        </Button>
+
+        <Button type='primary' onClick={handleDownloadWithSheetJs}>
+          Download Excel with exceljs
+        </Button>
+      </Flex>
     </CommCard>
   );
 };

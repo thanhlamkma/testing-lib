@@ -24,7 +24,7 @@ function flattenTree(data: unknown[], depth = 0, result: unknown[] = []) {
   return result;
 }
 
-export function downloadExcel(
+export function downExcelWithXlsx(
   condition: { [key: string]: unknown },
   header: string[],
   data: unknown[],
