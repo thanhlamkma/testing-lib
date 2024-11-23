@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommCard from '@/common/components/CommCard';
+import { downExcel } from '@/pages/test/utils/download';
 import { downExcelWithSheetJs, SheetDataType } from '@/pages/test/utils/sheetjs';
 import { downExcelWithXlsx, TableDataType } from '@/pages/test/utils/xlsx';
 import { Button, Flex } from 'antd';
@@ -10,6 +12,50 @@ const TestPage = () => {
     { id: 2, name: 'Bob', dob: new Date(1999, 2, 3) },
     { id: 3, name: 'Charlie', dob: new Date(1999, 3, 4) }
   ]);
+
+  const searchInputs = [
+    {
+      name: 'Name',
+      key: 'name',
+      type: 'text'
+    },
+    {
+      name: 'Delivery',
+      key: 'delivery',
+      type: 'select',
+      option: [
+        {
+          label: 'Giao hang nhanh',
+          value: 'GHN'
+        },
+        {
+          label: 'Giao hang tiet kiem',
+          value: 'GHTK'
+        }
+      ]
+    },
+    {
+      name: 'Type',
+      key: 'type',
+      type: 'radio',
+      option: [
+        {
+          label: 'New',
+          value: 'new'
+        },
+        {
+          label: 'Old',
+          value: 'old'
+        }
+      ]
+    }
+  ];
+
+  const request = {
+    name: 'Iphone 16 Pro Max',
+    delivery: 'GHTK',
+    type: 'new'
+  };
 
   const treeData = useState([
     {
@@ -77,6 +123,35 @@ const TestPage = () => {
     downExcelWithSheetJs(data[0]);
   };
 
+  const handleCustomDownload = () => {
+    const conditionData = searchInputs.reduce((acc: any, input) => {
+      const reqVal = request[input.key as keyof typeof request];
+      if (input.type === 'select' || input.type === 'radio') {
+        acc[input.key] = input.option?.find((e) => reqVal === e.value)?.label ?? reqVal;
+      } else {
+        acc[input.key] = reqVal;
+      }
+      return acc;
+    }, {});
+
+    const condition = {
+      headers: searchInputs.map((item) => ({ name: item.name, key: item.key })),
+      data: conditionData
+    };
+
+    downExcel({
+      headers: [
+        { header: 'Name', key: 'name' },
+        { header: 'Price', key: 'price' },
+        { header: 'Description', key: 'description' }
+      ],
+      data: treeData[0],
+      fileName: 'Test download excel',
+      type: 'tree',
+      condition
+    });
+  };
+
   return (
     <CommCard>
       <Flex gap={16}>
@@ -86,6 +161,10 @@ const TestPage = () => {
 
         <Button type='primary' onClick={handleDownloadWithSheetJs}>
           Download Excel with exceljs
+        </Button>
+
+        <Button type='primary' onClick={handleCustomDownload}>
+          Custom Download
         </Button>
       </Flex>
     </CommCard>
