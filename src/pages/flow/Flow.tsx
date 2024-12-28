@@ -1,74 +1,83 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { tempData } from '@/pages/flow/data/mock';
-import { getDagreLayout } from '@/pages/flow/utils/dagre';
 import {
   Background,
   Controls,
-  Panel,
   ReactFlow,
+  addEdge,
   useEdgesState,
   useNodesState,
-  useReactFlow
+  type Edge,
+  type EdgeTypes,
+  type Node,
+  type OnConnect
 } from '@xyflow/react';
-import { Button } from 'antd';
-import { useCallback, useEffect } from 'react';
+import '@xyflow/react/dist/style.css';
+import { useCallback } from 'react';
+import './styles/index.css';
+
+import CustomEdge from './components/CustomEdge';
+import CustomEdgeStartEnd from './components/CustomEdgeStartEnd';
+
+const initialNodes: Node[] = [
+  {
+    id: '1',
+    type: 'input',
+    data: { label: 'Node 1' },
+    position: { x: 0, y: 0 }
+  },
+  { id: '2', data: { label: 'Node 2' }, position: { x: 0, y: 300 } },
+  { id: '3', data: { label: 'Node 3' }, position: { x: 200, y: 0 } },
+  { id: '4', data: { label: 'Node 4' }, position: { x: 200, y: 300 } }
+];
+
+const initialEdges: Edge[] = [
+  {
+    id: 'e1-2',
+    source: '1',
+    target: '2',
+    data: {
+      label: 'edge label'
+    },
+    type: 'custom'
+  },
+  {
+    id: 'e3-4',
+    source: '3',
+    target: '4',
+    data: {
+      startLabel: 'start edge label',
+      endLabel: 'end edge label'
+    },
+    type: 'start-end'
+  }
+];
+
+const edgeTypes: EdgeTypes = {
+  custom: CustomEdge,
+  'start-end': CustomEdgeStartEnd
+};
 
 const Flow = () => {
-  const { fitView } = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
-
-  const onLayout = useCallback(
-    (direction: any) => {
-      console.log(nodes);
-      const layouted = getDagreLayout(nodes, edges, { direction });
-
-      setNodes([...layouted.nodes]);
-      setEdges([...layouted.edges]);
-
-      window.requestAnimationFrame(() => {
-        fitView();
-      });
-    },
-    [nodes, edges, setEdges, setNodes]
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const onConnect: OnConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges]
   );
 
-  useEffect(() => {
-    setNodes(
-      tempData.vertices.map((item, index) => {
-        return {
-          ...item,
-          data: { label: item.id },
-          position: { x: 0, y: index * 100 }
-        };
-      })
-    );
-
-    setEdges(
-      tempData.edges.map((item) => ({
-        ...item,
-        id: `${item.source}-${item.target}`
-      }))
-    );
-  }, [setNodes, setEdges]);
-
   return (
-    <div className='flow-page'>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        fitView
-      >
-        <Panel className='flex gap-2' position='top-right'>
-          <Button onClick={() => onLayout('TB')}>Vertical</Button>
-          <Button onClick={() => onLayout('LR')}>Horizontal</Button>
-        </Panel>
-        <Background />
-        <Controls />
-      </ReactFlow>
-    </div>
+    <ReactFlow
+      nodes={nodes}
+      edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      onConnect={onConnect}
+      edgeTypes={edgeTypes}
+      fitView
+      style={{ backgroundColor: '#F7F9FB' }}
+    >
+      <Controls />
+      <Background />
+    </ReactFlow>
   );
 };
 
