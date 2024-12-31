@@ -68,9 +68,8 @@
   background-color: rgba(207, 182, 255, 0.4);
   border-color: #9e86ed;
 }
-
-.react-flow__edge.selectable:hover .react-flow__edge-path,
-.react-flow__edge.selectable.selected .react-flow__edge-path {
+.react-flow__edge.selectable.selected .react-flow__edge-path,
+.react-flow__edge.selectable:hover .react-flow__edge-path {
   stroke: var(--xy-theme-edge-hover);
 }
 
@@ -96,13 +95,23 @@
 }
 
 .react-flow__resize-control.handle {
-  background-color: #ffffff;
+  background-color: #ffff;
   border-color: #9e86ed;
   border-radius: 0;
   width: 5px;
   height: 5px;
 }
 
+/* ----- Workflow ------ */
+.workflow {
+  border-radius: 16px;
+  background-color: rgba(var(--bg-card) / 1);
+}
+
 .react-flow__edge-path {
   stroke-width: 2px;
+}
+
+.react-flow__edge-path.selectttt {
+  stroke: #9e86ed !important;
 }
