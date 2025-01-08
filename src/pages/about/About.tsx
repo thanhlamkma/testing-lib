@@ -1,13 +1,15 @@
-import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import MaximizePortal from '@/pages/about/components/MaximizePortal';
 
 const About = () => {
   return (
-    <div>
-      <h1>About</h1>
-      <Button type='primary'>
-        <Link to='/dashboard'>Dashboard</Link>
-      </Button>
+    <div className='flex items-center justify-center w-full h-full'>
+      <MaximizePortal>
+        <div className='flex items-center justify-center w-full h-full'>
+          <p className='text-2xl font-medium text-center capitalize'>
+            Test maximize and restore down
+          </p>
+        </div>
+      </MaximizePortal>
     </div>
   );
 };
