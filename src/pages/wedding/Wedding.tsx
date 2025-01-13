@@ -4,17 +4,19 @@ const Wedding = () => {
       <div className='wedding-page'>
         {/* Left */}
         <div className='left-card'>
-          <div className='flex items-center justify-center w-full h-[60px]'>Happy Wedding</div>
+          <div className='flex items-center justify-center w-full h-[100px]'>Happy Wedding</div>
 
-          <div className='w-[468px] h-[calc(100%-140px)]'>
+          <div className='relative w-[440px] h-[calc(100%-200px)]'>
             <img
-              className='object-cover w-full h-full'
+              className='object-cover w-full h-full rounded-md'
               src='./images/NTH_8926_edit.JPG'
               alt='Image 1'
             />
+
+            <p className='absolute text-xl font-bold top-20 right-20'>Lâm & Ninh</p>
           </div>
 
-          <div className='flex flex-col items-center justify-center h-[80px]'>
+          <div className='flex flex-col items-center justify-center h-[100px]'>
             <p>Trân trọng kính mời</p>
             <p>....................................</p>
           </div>

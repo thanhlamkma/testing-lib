@@ -205,14 +205,21 @@
 
 /*----- Wedding -----*/
 .wedding-page {
-  padding: 24px;
+  padding: 24px 80px;
   height: 100vh;
   width: 100vw;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 579px;
+
+  border: 12px rgba(255, 228, 228, 0.75);
+  border-style: double;
+  background: url('./images/NTH_9536.JPG') no-repeat;
+  background-color: rgb(92, 9, 9);
+  background-size: 720px;
+  background-position: center;
 
   @media (max-width: 1000px) {
     height: 100%;
@@ -222,6 +229,7 @@
 
   .left-card,
   .right-card {
+    // visibility: hidden;
     height: 668px;
     width: 468px;
 
@@ -230,7 +238,12 @@
     justify-content: space-between;
     flex-direction: column;
 
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background: rgba(255, 242, 242, 0.4);
+    border-radius: 6px;
+    box-shadow: 0 4px 30px rgba(255, 235, 235, 0.18);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    // border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .right-card {
