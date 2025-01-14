@@ -1,25 +1,30 @@
 const Wedding = () => {
   return (
     <div className='light-theme'>
-      <div className='wedding-page'>
+      <div className='wedding-page template-v1'>
         {/* Left */}
         <div className='left-card'>
-          <div className='flex items-center justify-center w-full h-[100px]'>Happy Wedding</div>
-
-          <div className='relative w-[440px] h-[calc(100%-200px)]'>
+          <div className='w-[300px] h-[440px] border-[3px] border-solid border-[#b59264]'>
+            <img className='object-cover w-full h-full' src='./images/NTH_9321.JPG' alt='Image 1' />
+          </div>
+          {/* <div className='relative w-[468px] h-[356px]'>
             <img
-              className='object-cover w-full h-full rounded-md'
+              className='object-cover w-full h-full'
               src='./images/NTH_8926_edit.JPG'
               alt='Image 1'
             />
 
             <p className='absolute text-xl font-bold top-20 right-20'>Lâm & Ninh</p>
-          </div>
+          </div> */}
 
-          <div className='flex flex-col items-center justify-center h-[100px]'>
-            <p>Trân trọng kính mời</p>
-            <p>....................................</p>
-          </div>
+          {/* <div className='flex-1 w-[300px] flower'>
+            <div className='flex items-center justify-center w-full h-[100px]'>Happy Wedding</div>
+
+            <div className='flex flex-col items-center justify-center h-[100px]'>
+              <p>Trân trọng kính mời</p>
+              <p>....................................</p>
+            </div>
+          </div> */}
         </div>
 
         {/* Right */}

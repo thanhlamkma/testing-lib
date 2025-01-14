@@ -1,6 +1,14 @@
 import LayoutAuth from '@/layouts/LayoutAuth';
 import SignIn from '@/pages/auth/SignIn';
-import { About, Dashboard, FlowProvider, Setting, TestPage, Wedding } from '@/routes/allPages';
+import {
+  About,
+  Dashboard,
+  FlowProvider,
+  Setting,
+  TestPage,
+  Wedding,
+  WeddingTemplate2
+} from '@/routes/allPages';
 import ProtectedRoute from '@/routes/ProtectedRoute';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -44,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/grela-wedding',
     element: <Wedding />
+  },
+  {
+    path: '/grela-wedding-2',
+    element: <WeddingTemplate2 />
   }
 ]);
 

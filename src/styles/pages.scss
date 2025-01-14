@@ -227,26 +227,74 @@
     overflow: auto;
   }
 
-  .left-card,
-  .right-card {
-    // visibility: hidden;
-    height: 668px;
-    width: 468px;
+  &.template-v1 {
+    .left-card,
+    .right-card {
+      height: 668px;
+      width: 468px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
 
-    background: rgba(255, 242, 242, 0.4);
-    border-radius: 6px;
-    box-shadow: 0 4px 30px rgba(255, 235, 235, 0.18);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    // border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgb(243, 242, 230);
+      box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 14px 28px,
+        rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    }
+
+    .left-card {
+      justify-content: center;
+      padding: 16px;
+      background-image: url('./images/flowers/bg8.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .right-card {
+      justify-content: space-between;
+      padding: 16px;
+      background-image: url('./images/flowers/bg6.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 
-  .right-card {
-    padding: 16px;
+  &.template-v2 {
+    .left-card,
+    .right-card {
+      height: 668px;
+      width: 468px;
+
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      background: rgb(243, 242, 230);
+      box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 14px 28px,
+        rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    }
+
+    .left-card {
+      justify-content: center;
+    }
+
+    .right-card {
+      justify-content: space-between;
+      padding: 16px;
+      background-image: url('./images/flowers/bg6.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .flower {
+      background-image: url('./images/flowers/bg1.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
   }
 }
