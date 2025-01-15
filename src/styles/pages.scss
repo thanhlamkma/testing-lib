@@ -227,22 +227,23 @@
     overflow: auto;
   }
 
+  .left-card,
+  .right-card {
+    position: relative;
+    height: 668px;
+    width: 468px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    background: rgb(243, 242, 230);
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 14px 28px,
+      rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  }
+
   &.template-v1 {
-    .left-card,
-    .right-card {
-      height: 668px;
-      width: 468px;
-
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-
-      background: rgb(243, 242, 230);
-      box-shadow:
-        rgba(0, 0, 0, 0.25) 0px 14px 28px,
-        rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    }
-
     .left-card {
       justify-content: center;
       padding: 16px;
@@ -260,24 +261,45 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+
+    .save-the-date,
+    .best-regards {
+      font-family: 'Santillana-Daughter';
+      font-family: 'Nusrat';
+      font-family: 'Pateglamt-Script';
+      font-family: 'SpringtimeFlourish';
+      font-family: 'Springtime2';
+      font-family: 'ChopsNormal';
+      font-family: 'Peristiwa';
+    }
+
+    .save-the-date {
+      font-size: 56px;
+      color: #d13967;
+    }
+
+    .wed-date {
+      color: #2ea715;
+      font-family: 'Nunito';
+      font-size: 40px;
+      font-weight: 600;
+    }
+
+    // .best-regards {
+    //   font-size: 26px;
+
+    //   .title {
+    //     font-family: 'Pateglamt-Script';
+    //     font-weight: bolder;
+    //     color: #080807;
+    //   }
+
+    //   .content {
+    //   }
+    // }
   }
 
   &.template-v2 {
-    .left-card,
-    .right-card {
-      height: 668px;
-      width: 468px;
-
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-
-      background: rgb(243, 242, 230);
-      box-shadow:
-        rgba(0, 0, 0, 0.25) 0px 14px 28px,
-        rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    }
-
     .left-card {
       justify-content: center;
     }

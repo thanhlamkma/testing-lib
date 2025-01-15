@@ -7,23 +7,18 @@ const Wedding = () => {
           <div className='w-[300px] h-[440px] border-[3px] border-solid border-[#b59264]'>
             <img className='object-cover w-full h-full' src='./images/NTH_9321.JPG' alt='Image 1' />
           </div>
-          {/* <div className='relative w-[468px] h-[356px]'>
-            <img
-              className='object-cover w-full h-full'
-              src='./images/NTH_8926_edit.JPG'
-              alt='Image 1'
-            />
 
-            <p className='absolute text-xl font-bold top-20 right-20'>Lâm & Ninh</p>
-          </div> */}
+          <div className='absolute flex items-center justify-end top-4 right-8 save-the-date'>
+            Save The Date
+          </div>
 
-          {/* <div className='flex-1 w-[300px] flower'>
-            <div className='flex items-center justify-center w-full h-[100px]'>Happy Wedding</div>
+          <div className='absolute left-0 flex flex-col items-center justify-center w-full bottom-8 wed-date'>
+            15 . 03 . 2025
+          </div>
 
-            <div className='flex flex-col items-center justify-center h-[100px]'>
-              <p>Trân trọng kính mời</p>
-              <p>....................................</p>
-            </div>
+          {/* <div className='absolute left-0 flex flex-col items-center justify-center w-full bottom-4 best-regards'>
+            <p className='title'>Trân trọng kính mời</p>
+            <p className='content'>....................................</p>
           </div> */}
         </div>
 

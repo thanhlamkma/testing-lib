@@ -10,6 +10,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
+@font-face {
+  font-family: 'Nusrat';
+  src: url('./fonts/SVN-Nusrat.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Pateglamt-Script';
+  src: url('./fonts/SVN-Pateglamt-Script.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Peristiwa';
+  src: url('./fonts/SVN-Peristiwa.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Santillana-Daughter';
+  src: url('./fonts/SVN-Santillana-Daughter.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'SpringtimeFlourish';
+  src: url('./fonts/SpringtimeFlourish.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Springtime2';
+  src: url('./fonts/Springtime2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'ChopsNormal';
+  src: url('./fonts/ChopsNormal.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
 html {
   box-sizing: border-box;
   font-family: 'Noto Sans KR', sans-serif;
