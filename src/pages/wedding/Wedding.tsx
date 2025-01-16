@@ -3,18 +3,16 @@ const Wedding = () => {
     <div className='light-theme'>
       <div className='wedding-page template-v1'>
         {/* Left */}
-        <div className='left-card'>
-          <div className='w-[300px] h-[440px] border-[3px] border-solid border-[#b59264]'>
-            <img className='object-cover w-full h-full' src='./images/NTH_9321.JPG' alt='Image 1' />
-          </div>
-
-          <div className='absolute flex items-center justify-end top-4 right-8 save-the-date'>
+        <div className='lc'>
+          <div className='absolute flex items-center justify-end top-4 right-8 lc__save-date'>
             Save The Date
           </div>
 
-          <div className='absolute left-0 flex flex-col items-center justify-center w-full bottom-8 wed-date'>
-            15 . 03 . 2025
+          <div className='lc__img-ctn border-[3px] border-solid border-[#b59264]'>
+            <img className='lc__img' src='./images/NTH_9321.JPG' alt='Image 1' />
           </div>
+
+          <div className='absolute left-8 bottom-6 lc__date'>15 . 03 . 2025</div>
 
           {/* <div className='absolute left-0 flex flex-col items-center justify-center w-full bottom-4 best-regards'>
             <p className='title'>Trân trọng kính mời</p>
@@ -23,7 +21,7 @@ const Wedding = () => {
         </div>
 
         {/* Right */}
-        <div className='right-card'>
+        <div className='rc'>
           <div>
             <p>Thanh Lâm</p>
             <p>&</p>

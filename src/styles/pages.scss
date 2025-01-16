@@ -205,33 +205,59 @@
 
 /*----- Wedding -----*/
 .wedding-page {
-  padding: 24px 80px;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  padding: 16px;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 579px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-  border: 12px rgba(255, 228, 228, 0.75);
+  border: 8px rgba(255, 228, 228, 0.75);
   border-style: double;
   background: url('./images/NTH_9536.JPG') no-repeat;
   background-color: rgb(92, 9, 9);
-  background-size: 720px;
+  background-size: 500px;
   background-position: center;
 
-  @media (max-width: 1000px) {
-    height: 100%;
-    flex-direction: column;
-    overflow: auto;
+  @media (min-width: 1280px) {
+    height: 100vh;
+    width: 100vw;
+
+    flex-direction: row;
+    gap: 400px;
   }
 
-  .left-card,
-  .right-card {
+  @media (min-width: 1440px) {
+    gap: 460px;
+    background-size: 560px;
+  }
+
+  @media (min-width: 1536px) {
+    gap: 520px;
+    background-size: 620px;
+  }
+
+  // @media (max-width: 1600px) {
+  //   background-size: 600px;
+  //   gap: 480px;
+  // }
+
+  // @media (max-width: 1500px) {
+  //   background-size: 500px;
+  //   gap: 400px;
+  // }
+
+  .lc,
+  .rc {
     position: relative;
-    height: 668px;
-    width: 468px;
+
+    width: 320px;
+    height: 600px;
 
     display: flex;
     align-items: center;
@@ -241,19 +267,103 @@
     box-shadow:
       rgba(0, 0, 0, 0.25) 0px 14px 28px,
       rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+    @media (min-width: 390px) {
+      width: 350px;
+      height: 650px;
+    }
+
+    @media (min-width: 430px) {
+      width: 374px;
+      height: 650px;
+    }
+
+    @media (min-width: 768px) {
+      width: 420px;
+      height: 668px;
+    }
+
+    @media (min-width: 1440px) {
+      width: 468px;
+      height: 668px;
+    }
   }
 
+  // TEMPLATE 1
   &.template-v1 {
-    .left-card {
+    .lc {
       justify-content: center;
       padding: 16px;
       background-image: url('./images/flowers/bg8.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+
+      &__save-date,
+      .best-regards {
+        font-family: 'Santillana-Daughter';
+        font-family: 'Nusrat';
+        font-family: 'Pateglamt-Script';
+        font-family: 'SpringtimeFlourish';
+        font-family: 'Springtime2';
+        font-family: 'ChopsNormal';
+        font-family: 'Peristiwa';
+      }
+
+      &__save-date {
+        font-size: 40px;
+        color: #d13967;
+
+        @media (min-width: 390px) {
+          font-size: 44px;
+        }
+
+        @media (min-width: 430px) {
+          font-size: 48px;
+        }
+
+        @media (min-width: 768px) {
+          font-size: 52px;
+        }
+
+        @media (min-width: 1440px) {
+          font-size: 56px;
+        }
+      }
+
+      &__img-ctn {
+        width: 300px;
+        height: 400px;
+      }
+
+      &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &__date {
+        color: #9b784b;
+        font-family: 'Nusrat';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      // .best-regards {
+      //   font-size: 26px;
+
+      //   .title {
+      //     font-family: 'Pateglamt-Script';
+      //     font-weight: bolder;
+      //     color: #080807;
+      //   }
+
+      //   .content {
+      //   }
+      // }
     }
 
-    .right-card {
+    .rc {
       justify-content: space-between;
       padding: 16px;
       background-image: url('./images/flowers/bg6.jpg');
@@ -261,50 +371,15 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-
-    .save-the-date,
-    .best-regards {
-      font-family: 'Santillana-Daughter';
-      font-family: 'Nusrat';
-      font-family: 'Pateglamt-Script';
-      font-family: 'SpringtimeFlourish';
-      font-family: 'Springtime2';
-      font-family: 'ChopsNormal';
-      font-family: 'Peristiwa';
-    }
-
-    .save-the-date {
-      font-size: 56px;
-      color: #d13967;
-    }
-
-    .wed-date {
-      color: #2ea715;
-      font-family: 'Nunito';
-      font-size: 40px;
-      font-weight: 600;
-    }
-
-    // .best-regards {
-    //   font-size: 26px;
-
-    //   .title {
-    //     font-family: 'Pateglamt-Script';
-    //     font-weight: bolder;
-    //     color: #080807;
-    //   }
-
-    //   .content {
-    //   }
-    // }
   }
 
+  // TEMPLATE 2
   &.template-v2 {
-    .left-card {
+    .lc {
       justify-content: center;
     }
 
-    .right-card {
+    .rc {
       justify-content: space-between;
       padding: 16px;
       background-image: url('./images/flowers/bg6.jpg');
