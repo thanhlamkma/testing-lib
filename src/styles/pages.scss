@@ -205,6 +205,13 @@
 
 /*----- Wedding -----*/
 .wedding-page {
+  //   font-family: 'Santillana-Daughter';
+  // font-family: 'Nusrat';
+  // font-family: 'Pateglamt-Script';
+  // font-family: 'SpringtimeFlourish';
+  // font-family: 'Springtime2';
+  // font-family: 'ChopsNormal';
+
   height: 100%;
   width: 100%;
   padding: 16px;
@@ -258,6 +265,7 @@
 
     width: 320px;
     height: 600px;
+    // height: calc(100vh - 40px);
 
     display: flex;
     align-items: center;
@@ -299,20 +307,14 @@
       background-repeat: no-repeat;
       background-position: center;
 
-      &__save-date,
-      .best-regards {
-        font-family: 'Santillana-Daughter';
-        font-family: 'Nusrat';
-        font-family: 'Pateglamt-Script';
-        font-family: 'SpringtimeFlourish';
-        font-family: 'Springtime2';
-        font-family: 'ChopsNormal';
-        font-family: 'Peristiwa';
-      }
-
       &__save-date {
+        position: absolute;
+        top: 16px;
+        right: 26px;
+
+        font-family: 'Peristiwa';
         font-size: 40px;
-        color: #d13967;
+        color: #d46262;
 
         @media (min-width: 390px) {
           font-size: 44px;
@@ -332,8 +334,23 @@
       }
 
       &__img-ctn {
-        width: 300px;
-        height: 400px;
+        width: 260px;
+
+        @media (min-width: 390px) {
+          width: 300px;
+        }
+
+        @media (min-width: 430px) {
+          width: 300px;
+        }
+
+        @media (min-width: 768px) {
+          width: 300px;
+        }
+
+        @media (min-width: 1440px) {
+          width: 300px;
+        }
       }
 
       &__img {
@@ -343,24 +360,15 @@
       }
 
       &__date {
-        color: #9b784b;
+        position: absolute;
+        bottom: 16px;
+        left: 20px;
+
+        color: #a77a3f;
         font-family: 'Nusrat';
         font-size: 30px;
         font-weight: 600;
       }
-
-      // .best-regards {
-      //   font-size: 26px;
-
-      //   .title {
-      //     font-family: 'Pateglamt-Script';
-      //     font-weight: bolder;
-      //     color: #080807;
-      //   }
-
-      //   .content {
-      //   }
-      // }
     }
 
     .rc {
