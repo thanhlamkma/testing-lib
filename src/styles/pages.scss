@@ -205,12 +205,10 @@
 
 /*----- Wedding -----*/
 .wedding-page {
-  //   font-family: 'Santillana-Daughter';
-  // font-family: 'Nusrat';
+  // font-family: 'Santillana-Daughter';
   // font-family: 'Pateglamt-Script';
-  // font-family: 'SpringtimeFlourish';
-  // font-family: 'Springtime2';
-  // font-family: 'ChopsNormal';
+  // font-family: 'Nusrat';
+  // font-family: 'WedFont';
 
   height: 100%;
   width: 100%;
@@ -372,12 +370,41 @@
     }
 
     .rc {
-      justify-content: space-between;
-      padding: 16px;
+      justify-content: center;
+      gap: 8px;
+      padding: 68px 20px;
       background-image: url('./images/flowers/bg6.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      font-family: 'Montserrat';
+      text-align: center;
+
+      @media (min-width: 800px) {
+        gap: 20px;
+        padding: 70px 40px;
+      }
+
+      &__couple {
+        margin: 10px 0 16px;
+        font-family: 'Nusrat';
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 40px;
+
+        @media (min-width: 800px) {
+          margin: 10px 0;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        &-and {
+          font-family: 'Pateglamt-Script';
+        }
+      }
     }
   }
 

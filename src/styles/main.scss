@@ -66,6 +66,38 @@
   font-display: swap; /* Ensures text is visible while the font loads */
 }
 
+@font-face {
+  font-family: 'WedFont';
+  src: url('./fonts/UTM-Wedding.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Pasternak';
+  src: url('./fonts/SVN-Pasternak.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Graphitel';
+  src: url('./fonts/SVN-Graphitel.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
+@font-face {
+  font-family: 'Quarzo';
+  src: url('./fonts/SVN-Quarzo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
 html {
   box-sizing: border-box;
   font-family: 'Noto Sans KR', sans-serif;
