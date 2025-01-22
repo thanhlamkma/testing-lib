@@ -301,14 +301,20 @@
       justify-content: center;
       padding: 16px;
       background-image: url('./images/flowers/bg8.jpg');
+      background-image: url('./images/backgrounds/WeddingBg6.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
 
       &__save-date {
         position: absolute;
-        top: 16px;
-        right: 26px;
+        top: 0;
+        left: 0;
+
+        padding: 16px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
 
         font-family: 'Peristiwa';
         font-size: 40px;
@@ -327,28 +333,13 @@
         }
 
         @media (min-width: 1440px) {
+          justify-content: end;
           font-size: 56px;
         }
       }
 
       &__img-ctn {
-        width: 260px;
-
-        @media (min-width: 390px) {
-          width: 300px;
-        }
-
-        @media (min-width: 430px) {
-          width: 300px;
-        }
-
-        @media (min-width: 768px) {
-          width: 300px;
-        }
-
-        @media (min-width: 1440px) {
-          width: 300px;
-        }
+        width: 270px;
       }
 
       &__img {
@@ -359,13 +350,22 @@
 
       &__date {
         position: absolute;
-        bottom: 16px;
-        left: 20px;
+        bottom: 0;
+        left: 0;
+
+        padding: 16px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
 
         color: #a77a3f;
         font-family: 'Nusrat';
         font-size: 30px;
         font-weight: 600;
+
+        @media (min-width: 600px) {
+          justify-content: start;
+        }
       }
     }
 

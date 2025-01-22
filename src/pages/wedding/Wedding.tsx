@@ -8,10 +8,10 @@ const Wedding = () => {
         <div className='lc'>
           <div className='lc__save-date'>Save The Date</div>
 
-          <div className='lc__img-ctn border-[3px] border-solid border-[#b59264]'>
+          <div className='lc__img-ctn'>
             <Carousel infinite={true} draggable>
               <div>
-                <img className='lc__img' src='./images/WeddingCard2.png' alt='Image 1' />
+                <img className='lc__img' src='./images/WeddingCard5.png' alt='Image 1' />
               </div>
               <div>
                 <img className='lc__img' src='./images/NTH_8926.JPG' alt='Image 2' />
