@@ -193,8 +193,6 @@
   }
 }
 
-/*----- About -----*/
-
 /*----- Flow -----*/
 .flow-page {
   height: 100%;
@@ -339,13 +337,38 @@
       }
 
       &__img-ctn {
-        width: 270px;
+        width: 268px;
+        height: 350px;
+
+        @media (min-width: 390px) {
+          width: 290px;
+          height: 380px;
+        }
+
+        @media (min-width: 1440px) {
+          width: 310px;
+          height: 410px;
+        }
       }
 
       &__img {
-        width: 100%;
-        height: 100%;
+        width: 266px;
+        height: 356px;
         object-fit: cover;
+        object-position: center;
+        clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
+        mask-image: radial-gradient(circle at 50% 50%, black 78%, transparent 80%);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 78%, transparent 80%);
+
+        @media (min-width: 390px) {
+          width: 290px;
+          height: 386px;
+        }
+
+        @media (min-width: 1440px) {
+          width: 310px;
+          height: 416px;
+        }
       }
 
       &__date {

@@ -9,7 +9,7 @@ const Wedding = () => {
           <div className='lc__save-date'>Save The Date</div>
 
           <div className='lc__img-ctn'>
-            <Carousel infinite={true} draggable>
+            <Carousel className='w-full h-full' infinite={true} dots={false} draggable fade>
               <div>
                 <img className='lc__img' src='./images/WeddingCard5.png' alt='Image 1' />
               </div>
@@ -26,7 +26,7 @@ const Wedding = () => {
                 <img className='lc__img' src='./images/NTH_9000.JPG' alt='Image 5' />
               </div>
               <div>
-                <img className='lc__img' src='./images/NTH_9285.JPG' alt='Image 6' />
+                <img className='lc__img' src='./images/NTH_9213.JPG' alt='Image 6' />
               </div>
               <div>
                 <img className='lc__img' src='./images/NTH_9499.JPG' alt='Image 7' />
