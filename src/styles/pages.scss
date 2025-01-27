@@ -394,22 +394,24 @@
 
     .rc {
       justify-content: center;
-      gap: 8px;
-      padding: 68px 20px;
+      gap: 6px;
+      padding: 68px 36px;
       background-image: url('./images/flowers/bg6.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
       font-family: 'Montserrat';
+      font-size: 13px;
       text-align: center;
 
       @media (min-width: 800px) {
         gap: 20px;
         padding: 70px 40px;
+        font-size: 16px;
       }
 
       &__couple {
-        margin: 10px 0 16px;
+        margin: 6px 0 12px;
         font-family: 'Nusrat';
         font-size: 26px;
         font-weight: 600;
@@ -421,7 +423,22 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          gap: 16px;
+        }
+
+        @media (min-width: 1440px) {
+          margin: 10px 0;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
           gap: 20px;
+
+          font-size: 30px;
+        }
+
+        p {
+          color: #da312e;
         }
 
         &-and {
