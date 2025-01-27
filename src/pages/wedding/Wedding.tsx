@@ -71,28 +71,39 @@ const Wedding = () => {
 
           <p>Được tổ chức vào hồi</p>
 
-          <div className='flex flex-col items-center justify-center gap-1 text-base font-semibold'>
-            <p className='text-base'>10 giờ 30</p>
+          <div className='flex flex-col items-center justify-center gap-2 text-base font-semibold md:text-lg'>
+            <p className='text-base md:text-lg'>10 giờ 30</p>
 
-            <div className='flex items-center justify-center gap-4'>
-              <span className='py-1 border-t border-b border-solid'>THỨ BẢY</span>
-              <span className='flex items-center justify-center w-12 h-12 text-3xl font-semibold border border-solid rounded-full text-[#da312e]'>
+            <div className='flex items-center justify-center gap-2'>
+              <span className='px-2 py-1 border-t border-b border-solid'>THỨ BẢY</span>
+
+              <div className='heart'>
+                <span className='absolute left-0 z-10 w-full text-2xl text-center text-white top-[5px]'>
+                  15
+                </span>
+              </div>
+
+              <span className='px-2 py-1 border-t border-b border-solid'>03 - 2025</span>
+
+              {/* <span className='flex items-center justify-center w-12 h-12 text-3xl font-semibold border border-solid rounded-full text-[#da312e]'>
                 15
-              </span>
-              <span className='py-1 border-t border-b border-solid'>03 - 2025</span>
+              </span> */}
+              {/* <div className='w-12 h-12 flex items-center justify-center bg-[#da312e] rotate-45'>
+                <span className='text-3xl text-white -rotate-45'>15</span>
+              </div> */}
             </div>
 
             {/* <p className='text-base'>2025</p> */}
 
-            <p className='text-sm'>(Tức ngày 16 tháng 02 năm Tân Tỵ)</p>
+            <p className='text-sm md:text-base'>(Tức ngày 16 tháng 02 năm Ất Tỵ)</p>
           </div>
 
-          <div className='my-1 text-base font-medium font-[Mulish]'>
+          <div className='my-1 text-base md:text-lg font-medium font-[Mulish]'>
             <p>Tại: Tư gia nhà trai</p>
             <p>Xóm 2, Xuân Châu, Xuân Trường, Nam Định</p>
           </div>
 
-          <div className='text-2xl font-[Santillana-Daughter] leading-6'>
+          <div className='text-2xl md:text-3xl font-[Santillana-Daughter] leading-6'>
             Sự hiện diện của quý khách là niềm vinh dự cho gia đình chúng tôi!
           </div>
         </div>

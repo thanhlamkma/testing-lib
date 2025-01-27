@@ -438,12 +438,42 @@
         }
 
         p {
+          color: #ff7973;
           color: #da312e;
         }
 
         &-and {
           font-family: 'Pateglamt-Script';
         }
+      }
+
+      .heart {
+        position: relative;
+        width: 50px;
+        height: 42px;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 25px; /* Điều chỉnh kích thước */
+        height: 42px; /* Điều chỉnh kích thước */
+        background-color: #da312e;
+        border-radius: 22px 22px 0 0; /* Bo tròn */
+      }
+
+      .heart::before {
+        left: 25px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+
+      .heart::after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
       }
     }
   }
