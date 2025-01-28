@@ -295,6 +295,8 @@
 
   // TEMPLATE 1
   &.template-v1 {
+    position: relative;
+
     .lc {
       justify-content: center;
       padding: 16px;
@@ -451,29 +453,46 @@
         position: relative;
         width: 50px;
         height: 42px;
+        animation: heartbeat 1.5s infinite;
       }
 
       .heart::before,
       .heart::after {
         content: '';
         position: absolute;
-        top: 0;
-        width: 25px; /* Điều chỉnh kích thước */
-        height: 42px; /* Điều chỉnh kích thước */
-        background-color: #da312e;
-        border-radius: 22px 22px 0 0; /* Bo tròn */
+        top: 4px;
+        width: 38px; /* Điều chỉnh kích thước */
+        height: 38px; /* Điều chỉnh kích thước */
       }
 
       .heart::before {
-        left: 25px;
-        transform: rotate(-45deg);
-        transform-origin: 0 100%;
+        background-color: #da312e;
+        border-radius: 40% 60% 15% 85% / 40% 90% 10% 60%;
+        left: -11px;
+        transform: rotate(24deg);
+        transform-origin: 100% 100%;
       }
 
       .heart::after {
-        left: 0;
-        transform: rotate(45deg);
-        transform-origin: 100% 100%;
+        background-color: rgba(255, 255, 255, 0.03);
+        background-color: #da312e;
+        backdrop-filter: blur(16px);
+        border-radius: 60% 40% 85% 15% / 90% 40% 60% 10%;
+        right: -11px;
+        transform: rotate(-24deg);
+        transform-origin: 0% 100%;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
       }
     }
   }

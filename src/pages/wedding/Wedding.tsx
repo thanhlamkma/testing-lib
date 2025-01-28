@@ -1,6 +1,51 @@
+import { PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
 import { Carousel } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 
 const Wedding = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  function toggleMusic() {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current?.pause();
+      } else {
+        audioRef.current?.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  }
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (audioRef.current) {
+        audioRef.current
+          .play()
+          .then(() => {
+            console.log('Nhạc đang phát');
+            // Xóa sự kiện sau khi phát nhạc thành công
+            document.removeEventListener('click', handleUserInteraction);
+            document.removeEventListener('keydown', handleUserInteraction);
+            setIsPlaying(!isPlaying);
+          })
+          .catch((error) => {
+            console.error('Phát nhạc thất bại:', error);
+          });
+      }
+    };
+
+    // Lắng nghe sự kiện click hoặc keydown
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('keydown', handleUserInteraction);
+
+    // Dọn dẹp sự kiện khi component unmount
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, []);
+
   return (
     <div className='light-theme'>
       <div className='wedding-page template-v1'>
@@ -78,7 +123,7 @@ const Wedding = () => {
               <span className='px-2 py-1 border-t border-b border-solid'>THỨ BẢY</span>
 
               <div className='heart'>
-                <span className='absolute left-0 z-10 w-full text-2xl text-center text-white top-[5px]'>
+                <span className='absolute left-0 z-10 w-full text-3xl text-center text-white top-[2px]'>
                   15
                 </span>
               </div>
@@ -103,8 +148,27 @@ const Wedding = () => {
             <p>Xóm 2, Xuân Châu, Xuân Trường, Nam Định</p>
           </div>
 
-          <div className='text-2xl md:text-3xl font-[Santillana-Daughter] leading-6'>
+          <div className='text-2xl md:text-3xl font-[Santillana-Daughter] leading-6 -tracking-tight'>
             Sự hiện diện của quý khách là niềm vinh dự cho gia đình chúng tôi!
+          </div>
+        </div>
+
+        {/* Playing music */}
+        <audio ref={audioRef} loop>
+          <source src='./music/UntilYou.mp3' type='audio/mpeg' />
+          Your browser does not support the audio element.
+        </audio>
+
+        <div className='fixed flex items-center left-5 bottom-5' onClick={toggleMusic}>
+          <div>
+            {isPlaying ? (
+              <PauseCircleFilled className='text-[36px] text-[#f7b9b6]' />
+            ) : (
+              <PlayCircleFilled className='text-[36px] text-[#f7b9b6]' />
+            )}
+          </div>
+          <div className='py-1 pl-1 pr-2 -ml-2 text-sm bg-[#f7b9b6] rounded-r-lg font-[Nusrat] font-semibold cursor-pointer'>
+            Phát nhạc
           </div>
         </div>
       </div>
