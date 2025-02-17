@@ -9,6 +9,7 @@ export const Wedding = React.lazy(() => delayForDemo(import('@/pages/wedding/Wed
 export const WeddingTemplate2 = React.lazy(() =>
   delayForDemo(import('@/pages/wedding/WeddingTemplate2'))
 );
+export const Caro = React.lazy(() => delayForDemo(import('@/pages/caro/Caro')));
 
 function delayForDemo<T>(promise: Promise<T>) {
   return new Promise((resolve) => {

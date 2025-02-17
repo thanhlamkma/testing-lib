@@ -2,6 +2,7 @@ import LayoutAuth from '@/layouts/LayoutAuth';
 import SignIn from '@/pages/auth/SignIn';
 import {
   About,
+  Caro,
   Dashboard,
   FlowProvider,
   Setting,
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: 'test',
         element: <TestPage />
+      },
+      {
+        path: 'caro',
+        element: <Caro />
       }
     ]
   },
