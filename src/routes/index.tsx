@@ -1,15 +1,7 @@
+import LayoutApps from '@/layouts/LayoutApps';
 import LayoutAuth from '@/layouts/LayoutAuth';
 import SignIn from '@/pages/auth/SignIn';
-import {
-  About,
-  Caro,
-  Dashboard,
-  FlowProvider,
-  Setting,
-  TestPage,
-  Wedding,
-  WeddingTemplate2
-} from '@/routes/allPages';
+import { About, AIChat, Caro, Dashboard, FlowProvider, Setting, TestPage } from '@/routes/allPages';
 import ProtectedRoute from '@/routes/ProtectedRoute';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -37,10 +29,6 @@ const router = createBrowserRouter([
       {
         path: 'test',
         element: <TestPage />
-      },
-      {
-        path: 'caro',
-        element: <Caro />
       }
     ]
   },
@@ -55,12 +43,18 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/grela-wedding',
-    element: <Wedding />
+    path: '/apps',
+    element: <LayoutApps />,
+    children: [
+      {
+        path: 'caro',
+        element: <Caro />
+      }
+    ]
   },
   {
-    path: '/grela-wedding-2',
-    element: <WeddingTemplate2 />
+    path: '/ai',
+    element: <AIChat />
   }
 ]);
 

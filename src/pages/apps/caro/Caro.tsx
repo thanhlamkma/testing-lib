@@ -1,4 +1,4 @@
-import Board from '@/pages/caro/components/Board';
+import Board from '@/pages/apps/caro/components/Board';
 import { useState } from 'react';
 
 const Caro = () => {

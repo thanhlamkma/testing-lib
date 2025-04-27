@@ -201,389 +201,219 @@
   background: rgba(var(--bg-card) / 1);
 }
 
-/*----- Wedding -----*/
-.wedding-page {
-  // font-family: 'Santillana-Daughter';
-  // font-family: 'Pateglamt-Script';
-  // font-family: 'Nusrat';
-  // font-family: 'WedFont';
-
-  height: 100%;
-  width: 100%;
-  padding: 16px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 579px;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  border: 8px rgba(255, 228, 228, 0.75);
-  border-style: double;
-  background: url('./images/NTH_9536.JPG') no-repeat;
-  background-color: rgb(92, 9, 9);
-  background-size: 500px;
-  background-position: center;
-
-  @media (min-width: 1280px) {
-    height: 100vh;
-    width: 100vw;
-
-    flex-direction: row;
-    gap: 400px;
-  }
-
-  @media (min-width: 1440px) {
-    gap: 460px;
-    background-size: 560px;
-  }
-
-  @media (min-width: 1536px) {
-    gap: 520px;
-    background-size: 620px;
-  }
-
-  // @media (max-width: 1600px) {
-  //   background-size: 600px;
-  //   gap: 480px;
-  // }
-
-  // @media (max-width: 1500px) {
-  //   background-size: 500px;
-  //   gap: 400px;
-  // }
-
-  .lc,
-  .rc {
-    position: relative;
-
-    width: 320px;
-    height: 600px;
-    // height: calc(100vh - 40px);
-
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    background: rgb(243, 242, 230);
-    box-shadow:
-      rgba(0, 0, 0, 0.25) 0px 14px 28px,
-      rgba(0, 0, 0, 0.22) 0px 10px 10px;
-
-    @media (min-width: 390px) {
-      width: 350px;
-      height: 650px;
-    }
-
-    @media (min-width: 430px) {
-      width: 374px;
-      height: 650px;
-    }
-
-    @media (min-width: 768px) {
-      width: 420px;
-      height: 668px;
-    }
-
-    @media (min-width: 1440px) {
-      width: 468px;
-      height: 668px;
-    }
-  }
-
-  // TEMPLATE 1
-  &.template-v1 {
-    position: relative;
-
-    .lc {
-      justify-content: center;
-      padding: 16px;
-      background-image: url('./images/flowers/bg8.jpg');
-      background-image: url('./images/backgrounds/WeddingBg6.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-
-      &__save-date {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        padding: 16px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-        font-family: 'Peristiwa';
-        font-size: 40px;
-        color: #d46262;
-
-        @media (min-width: 390px) {
-          font-size: 44px;
-        }
-
-        @media (min-width: 430px) {
-          font-size: 48px;
-        }
-
-        @media (min-width: 768px) {
-          font-size: 52px;
-        }
-
-        @media (min-width: 1440px) {
-          justify-content: end;
-          font-size: 56px;
-        }
-      }
-
-      &__img-ctn {
-        width: 268px;
-        height: 350px;
-
-        @media (min-width: 390px) {
-          width: 290px;
-          height: 380px;
-        }
-
-        @media (min-width: 1440px) {
-          width: 310px;
-          height: 410px;
-        }
-      }
-
-      &__img {
-        width: 266px;
-        height: 356px;
-        object-fit: cover;
-        object-position: center;
-        clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
-        mask-image: radial-gradient(circle at 50% 50%, black 78%, transparent 80%);
-        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 78%, transparent 80%);
-
-        @media (min-width: 390px) {
-          width: 290px;
-          height: 386px;
-        }
-
-        @media (min-width: 1440px) {
-          width: 310px;
-          height: 416px;
-        }
-      }
-
-      &__date {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
-        padding: 16px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-        color: #a77a3f;
-        font-family: 'Nusrat';
-        font-size: 30px;
-        font-weight: 600;
-
-        @media (min-width: 600px) {
-          justify-content: start;
-        }
-      }
-    }
-
-    .rc {
-      justify-content: center;
-      gap: 6px;
-      padding: 68px 36px;
-      background-image: url('./images/flowers/bg6.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      font-family: 'Montserrat';
-      font-size: 13px;
-      text-align: center;
-
-      @media (min-width: 800px) {
-        gap: 20px;
-        padding: 70px 40px;
-        font-size: 16px;
-      }
-
-      &__couple {
-        margin: 6px 0 12px;
-        font-family: 'Nusrat';
-        font-size: 26px;
-        font-weight: 600;
-        line-height: 40px;
-
-        @media (min-width: 800px) {
-          margin: 10px 0;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-        }
-
-        @media (min-width: 1440px) {
-          margin: 10px 0;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-
-          font-size: 30px;
-        }
-
-        p {
-          color: #ff7973;
-          color: #da312e;
-        }
-
-        &-and {
-          font-family: 'Pateglamt-Script';
-        }
-      }
-
-      .heart {
-        position: relative;
-        width: 50px;
-        height: 42px;
-        animation: heartbeat 1.5s infinite;
-      }
-
-      .heart::before,
-      .heart::after {
-        content: '';
-        position: absolute;
-        top: 4px;
-        width: 38px; /* Điều chỉnh kích thước */
-        height: 38px; /* Điều chỉnh kích thước */
-      }
-
-      .heart::before {
-        background-color: #da312e;
-        border-radius: 40% 60% 15% 85% / 40% 90% 10% 60%;
-        left: -11px;
-        transform: rotate(24deg);
-        transform-origin: 100% 100%;
-      }
-
-      .heart::after {
-        background-color: rgba(255, 255, 255, 0.03);
-        background-color: #da312e;
-        backdrop-filter: blur(16px);
-        border-radius: 60% 40% 85% 15% / 90% 40% 60% 10%;
-        right: -11px;
-        transform: rotate(-24deg);
-        transform-origin: 0% 100%;
-      }
-
-      @keyframes heartbeat {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-    }
-  }
-
-  // TEMPLATE 2
-  &.template-v2 {
-    .lc {
-      justify-content: center;
-    }
-
-    .rc {
-      justify-content: space-between;
-      padding: 16px;
-      background-image: url('./images/flowers/bg6.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .flower {
-      background-image: url('./images/flowers/bg1.jpg');
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-  }
-}
-
 /*----- Caro -----*/
 .game {
   height: 100%;
   overflow-y: scroll;
   text-align: center;
-}
 
-.board {
-  display: grid;
-  grid-template-columns: repeat(24, 1fr);
-  gap: 0;
-  border: 2px solid #333;
-  background-color: #fff;
-  max-width: 800px;
-  margin: 20px auto;
-}
+  .board {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0;
+    border: 2px solid #333;
+    background-color: #fff;
+    max-width: 800px;
+    margin: 20px auto;
+  }
 
-.board-row {
-  display: contents;
-}
+  .board-row {
+    display: contents;
+  }
 
-.cell {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  font-weight: bold;
-  background-color: white;
+  .cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: white;
 
-  span {
-    font-size: 14px;
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .cell:hover {
+    background-color: #f8f8f8;
+  }
+
+  .status {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .reset-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .reset-btn:hover {
+    background-color: #45a049;
+  }
+
+  @media (min-width: 768px) {
+    .cell {
+      font-size: 1.5vw;
+    }
   }
 }
 
-.cell:hover {
-  background-color: #f8f8f8;
-}
+/*----- AI -----*/
+.ai-chat {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(var(--bg-card) / 1);
 
-.status {
-  margin: 20px 0;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
+  &__sidebar,
+  &__right {
+    padding: 24px;
+    width: 280px;
+    height: 100%;
+    background: rgba(var(--bg-main) / 1);
+  }
 
-.reset-btn {
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
-.reset-btn:hover {
-  background-color: #45a049;
-}
+    &[data-collapsed='true'] {
+      width: 80px;
+    }
+  }
 
-@media (min-width: 768px) {
-  .cell {
-    font-size: 1.5vw;
+  &__main {
+    flex: 1;
+    padding: 24px;
+  }
+
+  .chat {
+    &-container,
+    &-input {
+      background: rgba(var(--color-gray-100) / 1);
+    }
+
+    &-container {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+
+      &:focus-within {
+        background:
+          linear-gradient(rgba(var(--color-gray-100) / 1), rgba(var(--color-gray-100) / 1))
+            padding-box,
+          linear-gradient(to right, #ff8a00, #e52e71) border-box;
+      }
+    }
+
+    &-input {
+      border: none;
+      outline: none;
+      color: rgba(var(--color-text) / 1);
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &::placeholder {
+        color: rgba(var(--color-text) / 0.4);
+      }
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 9999px;
+        background: rgba(var(--color-gray-400) / 1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(var(--bg-card) / 1);
+        border-radius: 9999px;
+      }
+    }
+  }
+
+  .response {
+    &-container {
+      flex: 1;
+      position: relative;
+      padding: 8px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 9999px;
+        background: rgba(var(--color-gray-400) / 1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(var(--color-gray-100) / 1);
+        border-radius: 9999px;
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &-user {
+      width: fit-content;
+      padding: 12px;
+      background: rgba(var(--bg-main) / 1);
+      border-radius: 8px;
+    }
+
+    &-model {
+      background: rgba(var(--color-gray-100) / 1);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #6366f1;
+
+      p {
+        margin: 12px 0;
+        line-height: 1.6;
+        color: rgba(var(--color-text) / 1);
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 24px 0 16px 0;
+        color: rgba(var(--color-text) / 1);
+      }
+
+      li {
+        line-height: 1.8;
+        margin: 0 0 0 12px;
+      }
+    }
+
+    .animated-word {
+      display: inline-block; /* Crucial for transitions to work properly */
+      opacity: 0;
+      transform: translateY(-20px); /* Start above the final position */
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease; /* Adjust timings as needed */
+    }
+
+    .animated-word.show {
+      opacity: 1;
+      transform: translateY(0); /* Move to the final position */
+    }
   }
 }
