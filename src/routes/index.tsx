@@ -1,6 +1,7 @@
+import LayoutApps from '@/layouts/LayoutApps';
 import LayoutAuth from '@/layouts/LayoutAuth';
 import SignIn from '@/pages/auth/SignIn';
-import { About, Dashboard, FlowProvider, Setting, TestPage } from '@/routes/allPages';
+import { About, AIChat, Caro, Dashboard, FlowProvider, Setting, TestPage } from '@/routes/allPages';
 import ProtectedRoute from '@/routes/ProtectedRoute';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -40,6 +41,20 @@ const router = createBrowserRouter([
         element: <SignIn />
       }
     ]
+  },
+  {
+    path: '/apps',
+    element: <LayoutApps />,
+    children: [
+      {
+        path: 'caro',
+        element: <Caro />
+      }
+    ]
+  },
+  {
+    path: '/ai',
+    element: <AIChat />
   }
 ]);
 

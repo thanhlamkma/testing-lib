@@ -193,12 +193,227 @@
   }
 }
 
-/*----- About -----*/
-
 /*----- Flow -----*/
 .flow-page {
   height: 100%;
   width: 100%;
   border-radius: variable.$rounded-4;
   background: rgba(var(--bg-card) / 1);
+}
+
+/*----- Caro -----*/
+.game {
+  height: 100%;
+  overflow-y: scroll;
+  text-align: center;
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0;
+    border: 2px solid #333;
+    background-color: #fff;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+  .board-row {
+    display: contents;
+  }
+
+  .cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: white;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .cell:hover {
+    background-color: #f8f8f8;
+  }
+
+  .status {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .reset-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .reset-btn:hover {
+    background-color: #45a049;
+  }
+
+  @media (min-width: 768px) {
+    .cell {
+      font-size: 1.5vw;
+    }
+  }
+}
+
+/*----- AI -----*/
+.ai-chat {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(var(--bg-card) / 1);
+
+  &__sidebar,
+  &__right {
+    padding: 24px;
+    width: 280px;
+    height: 100%;
+    background: rgba(var(--bg-main) / 1);
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &[data-collapsed='true'] {
+      width: 80px;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    padding: 24px;
+  }
+
+  .chat {
+    &-container,
+    &-input {
+      background: rgba(var(--color-gray-100) / 1);
+    }
+
+    &-container {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+
+      &:focus-within {
+        background:
+          linear-gradient(rgba(var(--color-gray-100) / 1), rgba(var(--color-gray-100) / 1))
+            padding-box,
+          linear-gradient(to right, #ff8a00, #e52e71) border-box;
+      }
+    }
+
+    &-input {
+      border: none;
+      outline: none;
+      color: rgba(var(--color-text) / 1);
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &::placeholder {
+        color: rgba(var(--color-text) / 0.4);
+      }
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 9999px;
+        background: rgba(var(--color-gray-400) / 1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(var(--bg-card) / 1);
+        border-radius: 9999px;
+      }
+    }
+  }
+
+  .response {
+    &-container {
+      flex: 1;
+      position: relative;
+      padding: 8px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 9999px;
+        background: rgba(var(--color-gray-400) / 1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(var(--color-gray-100) / 1);
+        border-radius: 9999px;
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &-user {
+      width: fit-content;
+      padding: 12px;
+      background: rgba(var(--bg-main) / 1);
+      border-radius: 8px;
+    }
+
+    &-model {
+      background: rgba(var(--color-gray-100) / 1);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #6366f1;
+
+      p {
+        margin: 12px 0;
+        line-height: 1.6;
+        color: rgba(var(--color-text) / 1);
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 24px 0 16px 0;
+        color: rgba(var(--color-text) / 1);
+      }
+
+      li {
+        line-height: 1.8;
+        margin: 0 0 0 12px;
+      }
+    }
+
+    .animated-word {
+      display: inline-block; /* Crucial for transitions to work properly */
+      opacity: 0;
+      transform: translateY(-20px); /* Start above the final position */
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease; /* Adjust timings as needed */
+    }
+
+    .animated-word.show {
+      opacity: 1;
+      transform: translateY(0); /* Move to the final position */
+    }
+  }
 }
