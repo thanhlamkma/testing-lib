@@ -294,7 +294,7 @@
   }
 
   &__main {
-    flex: 1;
+    flex: 1 1 auto;
     padding: 24px;
   }
 
@@ -402,18 +402,24 @@
       }
     }
 
-    .animated-word {
-      display: inline-block; /* Crucial for transitions to work properly */
-      opacity: 0;
-      transform: translateY(-20px); /* Start above the final position */
-      transition:
-        opacity 0.5s ease,
-        transform 0.5s ease; /* Adjust timings as needed */
+    .typing {
+      position: relative;
     }
 
-    .animated-word.show {
+    .typing::after {
+      content: '|';
+      animation: blink 1s infinite;
       opacity: 1;
-      transform: translateY(0); /* Move to the final position */
+    }
+
+    @keyframes blink {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
     }
   }
 }
