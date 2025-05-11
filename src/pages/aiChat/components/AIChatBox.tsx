@@ -3,10 +3,11 @@ import { Button, Form, Input } from 'antd';
 import { FC } from 'react';
 
 interface AIChatBoxProps {
+  disabled: boolean;
   handleSubmit: (message: string) => void;
 }
 
-const AIChatBox: FC<AIChatBoxProps> = ({ handleSubmit }) => {
+const AIChatBox: FC<AIChatBoxProps> = ({ disabled, handleSubmit }) => {
   const [form] = Form.useForm();
 
   const onSubmit = (values: { message: string }) => {
@@ -25,6 +26,7 @@ const AIChatBox: FC<AIChatBoxProps> = ({ handleSubmit }) => {
               minRows: 1,
               maxRows: 4
             }}
+            disabled={disabled}
           />
         </Form.Item>
 
