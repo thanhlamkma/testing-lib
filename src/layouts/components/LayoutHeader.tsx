@@ -74,7 +74,7 @@ const AppLayoutHeader = () => {
         <CommIcon className='cursor-pointer' icon='icon-noti-empty' />
         <Select
           className='layout-header__lang-selection'
-          popupClassName='lang-selection__popup'
+          classNames={{ popup: { root: 'lang-selection__popup' } }}
           suffixIcon={null}
           options={langOptions}
           optionRender={(option) => <CommIcon icon={option.label as CommIconType} />}

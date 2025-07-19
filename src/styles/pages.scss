@@ -463,3 +463,18 @@
     text-align: right;
   }
 }
+
+/*----- Setting -----*/
+.setting {
+  .tree-list {
+    .node-file {
+      display: none;
+    }
+  }
+
+  .data-list {
+    .expand-icon {
+      display: none;
+    }
+  }
+}
