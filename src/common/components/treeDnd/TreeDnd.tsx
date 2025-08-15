@@ -77,9 +77,6 @@ const TreeDnd = () => {
     }
   }, [tree, selectedNodeId]);
 
-  console.log('data', data);
-  console.log('tree', tree);
-
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <Flex gap={48}>
