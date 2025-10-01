@@ -1,6 +1,7 @@
 import {
   Background,
   Controls,
+  Panel,
   ReactFlow,
   addEdge,
   useEdgesState,
@@ -11,10 +12,11 @@ import {
   type OnConnect
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
+import { RectangleTool } from '@/pages/flow/components/RectangleTool';
 import WorkflowProvider from '@/pages/flow/provider/WorkflowProvider';
 import clsx from 'clsx';
 import { useRecoilValue } from 'recoil';
@@ -68,6 +70,7 @@ const initialEdges: Edge[] = [
 const Flow = () => {
   const themeStore = useRecoilValue(darkThemeStoreState);
 
+  const [isRectangleActive, setIsRectangleActive] = useState(true);
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const edgeTypes: EdgeTypes = {
@@ -94,6 +97,25 @@ const Flow = () => {
       >
         <Controls />
         <Background />
+
+        {isRectangleActive && <RectangleTool />}
+
+        <Panel position='top-left'>
+          <div className='xy-theme__button-group'>
+            <button
+              className={`xy-theme__button ${isRectangleActive ? 'active' : ''}`}
+              onClick={() => setIsRectangleActive(true)}
+            >
+              Rectangle Mode
+            </button>
+            <button
+              className={`xy-theme__button ${!isRectangleActive ? 'active' : ''}`}
+              onClick={() => setIsRectangleActive(false)}
+            >
+              Selection Mode
+            </button>
+          </div>
+        </Panel>
       </ReactFlow>
     </WorkflowProvider>
   );
