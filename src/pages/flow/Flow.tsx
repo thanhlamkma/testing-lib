@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Background,
   Controls,
-  Panel,
+  NodeTypes,
   ReactFlow,
   XYPosition,
   addEdge,
   useEdgesState,
   useNodesState,
   useReactFlow,
-  type Edge,
   type EdgeTypes,
   type Node,
   type OnConnect
@@ -18,7 +18,7 @@ import { useCallback, useState } from 'react';
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
-import { RectangleTool } from '@/pages/flow/components/RectangleTool';
+import LoopNode from '@/pages/flow/components/LoopNode';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
 import WorkflowProvider from '@/pages/flow/provider/WorkflowProvider';
 import { Flex } from 'antd';
@@ -27,59 +27,24 @@ import { useRecoilValue } from 'recoil';
 import CustomEdge from './components/CustomEdge';
 import CustomEdgeStartEnd from './components/CustomEdgeStartEnd';
 
-const initialNodes: Node[] = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'Node 1' },
-    position: { x: 0, y: 0 }
-  },
-  { id: '2', data: { label: 'Node 2' }, position: { x: -120, y: 300 } },
-  { id: '3', data: { label: 'Node 3' }, position: { x: 400, y: 0 } },
-  { id: '4', data: { label: 'Node 4' }, position: { x: 400, y: 300 } },
-  { id: '5', data: { label: 'Node 5' }, position: { x: 120, y: 300 } }
-];
-
-const initialEdges: Edge[] = [
-  {
-    id: 'e1-2',
-    source: '1',
-    target: '2',
-    data: {
-      label: 'edge label'
-    },
-    type: 'custom'
-  },
-  {
-    id: 'e1-5',
-    source: '1',
-    target: '5',
-    data: {
-      label: 'edge label'
-    },
-    type: 'custom'
-  },
-  {
-    id: 'e3-4',
-    source: '3',
-    target: '4',
-    data: {
-      startLabel: 'start edge label',
-      endLabel: 'end edge label'
-    },
-    type: 'start-end'
-  }
-];
-
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const Flow = () => {
-  const themeStore = useRecoilValue(darkThemeStoreState);
+  const [nodes, , onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
+  const { setNodes } = useReactFlow();
 
-  const [isRectangleActive, setIsRectangleActive] = useState(true);
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const themeStore = useRecoilValue(darkThemeStoreState);
+  const { onDragStart, isDragging } = useDnD();
+
+  const [label, setLabel] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>(null);
+
+  // Data
+  const nodeTypes = {
+    'loop-node': LoopNode
+  };
   const edgeTypes: EdgeTypes = {
     custom: CustomEdge,
     'start-end': CustomEdgeStartEnd
@@ -103,31 +68,53 @@ const Flow = () => {
       key: 3,
       type: 'output',
       label: 'Node 3'
+    },
+    {
+      id: 4,
+      key: 4,
+      type: 'loop-node',
+      label: '4'
     }
   ];
 
+  // Actions
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            type: 'custom'
+          },
+          eds
+        )
+      ),
     [setEdges]
   );
 
-  // Drag drop
-  const { onDragStart, isDragging } = useDnD();
-  // The type of the node that is being dragged.
-  const [type, setType] = useState<string | null>(null);
-  const [label, setLabel] = useState<string | null>(null);
+  const onNodeDragStart = (e: React.MouseEvent, node: NodeTypes) => {
+    setNodes((nds) =>
+      nds.map((n) => ({
+        ...n,
+        dragStartX: n.position.x,
+        dragStartY: n.position.y
+      }))
+    );
+  };
 
-  const { setNodes } = useReactFlow();
+  const onNodeDrag = (e: React.MouseEvent, node: NodeTypes, nodes: NodeTypes[]) => {
+    console.log(e, node, nodes);
+  };
 
   const createAddNewNode = useCallback(
     (nodeType: string): OnDropAction => {
       return ({ position }: { position: XYPosition }) => {
-        // Here, we create a new node and add it to the flow.
-        // You can customize the behavior of what happens when a node is dropped on the flow here.
-        const newNode = {
+        const newNode: Node = {
           id: getId(),
           type: nodeType,
           position,
+          width: nodeType === 'loop-node' ? 240 : 120,
+          height: nodeType === 'loop-node' ? 160 : 40,
           data: { label: `${nodeType} node` }
         };
 
@@ -139,14 +126,18 @@ const Flow = () => {
   );
 
   return (
-    <Flex className='h-full' gap={16}>
+    <Flex id='flow-page' className='relative h-full rounded-xl flow-page' gap={16}>
       {isDragging && <DragGhost label={label} type={type} />}
 
-      <Flex className='w-[160px] bg-white p-4 rounded' gap={8} vertical>
+      <Flex
+        className='absolute top-4 left-4 z-[1] w-[160px] h-[calc(100%-28px)] bg-[rgba(var(--bg-main)/1)] p-4 rounded-lg'
+        gap={8}
+        vertical
+      >
         {fakeData.map((item) => (
           <div
             key={item.key}
-            className='w-[132px] flex items-center justify-center h-16 border border-solid rounded border-neutral-400'
+            className='w-[132px] flex items-center justify-center h-16 border border-solid rounded border-neutral-400 bg-white'
             onPointerDown={(event) => {
               setType(item.type);
               setLabel(item.label);
@@ -161,39 +152,26 @@ const Flow = () => {
       <div className='z-0 flex-1'>
         <WorkflowProvider>
           <ReactFlow
-            className={clsx('workflow rounded z-0', themeStore ? 'dark' : 'light')}
+            className={clsx('workflow rounded-xl z-0', themeStore ? 'dark' : 'light')}
             nodes={nodes}
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
+            nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
+            onNodeDrag={onNodeDrag}
+            onNodeDragStart={onNodeDragStart}
             fitView
+            proOptions={{ hideAttribution: true }}
           >
-            <Controls />
+            <Controls position='bottom-center' orientation='horizontal' />
             <Background />
-
-            {isRectangleActive && <RectangleTool />}
-
-            <Panel position='top-left'>
-              <div className='xy-theme__button-group'>
-                <button
-                  className={`xy-theme__button ${isRectangleActive ? 'active' : ''}`}
-                  onClick={() => setIsRectangleActive(true)}
-                >
-                  Rectangle Mode
-                </button>
-                <button
-                  className={`xy-theme__button ${!isRectangleActive ? 'active' : ''}`}
-                  onClick={() => setIsRectangleActive(false)}
-                >
-                  Selection Mode
-                </button>
-              </div>
-            </Panel>
           </ReactFlow>
         </WorkflowProvider>
       </div>
+
+      {/* <SettingNode /> */}
     </Flex>
   );
 };
@@ -210,7 +188,7 @@ function DragGhost({ type, label }: DragGhostProps) {
 
   return (
     <div
-      className={`w-[132px] flex items-center justify-center h-16 bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-10`}
+      className={`w-[132px] flex items-center justify-center h-16 bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-[2]`}
       style={{
         transform: `translate(${position.x - 32}px, ${position.y - 112}px) translate(-50%, -50%)`
       }}

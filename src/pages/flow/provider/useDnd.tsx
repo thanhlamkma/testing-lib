@@ -94,7 +94,7 @@ export const useDnD = () => {
 
       setIsDragging(false);
     },
-    [screenToFlowPosition, setIsDragging, dropAction]
+    [screenToFlowPosition, setIsDragging, dropAction, isDragging]
   );
 
   // Add global touch event listeners
