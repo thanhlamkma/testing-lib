@@ -18,10 +18,11 @@ import { useCallback, useState } from 'react';
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
+import CustomNode from '@/pages/flow/components/CustomNode';
 import LoopNode from '@/pages/flow/components/LoopNode';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
-import WorkflowProvider from '@/pages/flow/provider/WorkflowProvider';
 import { Flex } from 'antd';
+import classNames from 'classnames';
 import clsx from 'clsx';
 import { useRecoilValue } from 'recoil';
 import CustomEdge from './components/CustomEdge';
@@ -43,7 +44,8 @@ const Flow = () => {
 
   // Data
   const nodeTypes = {
-    'loop-node': LoopNode
+    'loop-node': LoopNode,
+    'custom-node': CustomNode
   };
   const edgeTypes: EdgeTypes = {
     custom: CustomEdge,
@@ -54,26 +56,26 @@ const Flow = () => {
     {
       id: 1,
       key: 1,
-      type: 'input',
-      label: 'Node 1'
+      type: 'custom-node',
+      data: {
+        label: 'Node 1'
+      }
     },
     {
       id: 2,
       key: 2,
-      type: 'Default',
-      label: 'Node 2'
-    },
-    {
-      id: 3,
-      key: 3,
-      type: 'output',
-      label: 'Node 3'
+      type: 'custom-node',
+      data: {
+        label: 'Node 2'
+      }
     },
     {
       id: 4,
       key: 4,
       type: 'loop-node',
-      label: '4'
+      data: {
+        label: 'Loop'
+      }
     }
   ];
 
@@ -103,19 +105,19 @@ const Flow = () => {
   };
 
   const onNodeDrag = (e: React.MouseEvent, node: NodeTypes, nodes: NodeTypes[]) => {
-    console.log(e, node, nodes);
+    // console.log(e, node, nodes);
   };
 
   const createAddNewNode = useCallback(
-    (nodeType: string): OnDropAction => {
+    (node: Node): OnDropAction => {
       return ({ position }: { position: XYPosition }) => {
         const newNode: Node = {
           id: getId(),
-          type: nodeType,
+          type: node.type,
           position,
-          width: nodeType === 'loop-node' ? 240 : 120,
-          height: nodeType === 'loop-node' ? 160 : 40,
-          data: { label: `${nodeType} node` }
+          width: node.type === 'loop-node' ? 400 : 200,
+          height: node.type === 'loop-node' ? 200 : 60,
+          data: { label: `${node.data.label}` }
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -130,48 +132,44 @@ const Flow = () => {
       {isDragging && <DragGhost label={label} type={type} />}
 
       <Flex
-        className='absolute top-4 left-4 z-[1] w-[160px] h-[calc(100%-28px)] bg-[rgba(var(--bg-main)/1)] p-4 rounded-lg'
+        className='absolute top-4 left-4 z-[1] h-[calc(100%-28px)] bg-[rgba(var(--bg-main)/1)] p-4 rounded-lg'
         gap={8}
         vertical
       >
         {fakeData.map((item) => (
           <div
             key={item.key}
-            className='w-[132px] flex items-center justify-center h-16 border border-solid rounded border-neutral-400 bg-white'
+            className='w-[200px] h-[60px] flex items-center justify-center border border-solid rounded border-neutral-400 bg-white'
             onPointerDown={(event) => {
               setType(item.type);
-              setLabel(item.label);
-              onDragStart(event, createAddNewNode(item.type));
+              setLabel(item.data?.label ?? '');
+              onDragStart(event, createAddNewNode(item as any));
             }}
           >
-            {item.label} - {item.type}
+            {item.data?.label}
           </div>
         ))}
       </Flex>
 
       <div className='z-0 flex-1'>
-        <WorkflowProvider>
-          <ReactFlow
-            className={clsx('workflow rounded-xl z-0', themeStore ? 'dark' : 'light')}
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            onNodeDrag={onNodeDrag}
-            onNodeDragStart={onNodeDragStart}
-            fitView
-            proOptions={{ hideAttribution: true }}
-          >
-            <Controls position='bottom-center' orientation='horizontal' />
-            <Background />
-          </ReactFlow>
-        </WorkflowProvider>
+        <ReactFlow
+          className={clsx('workflow rounded-xl z-0', themeStore ? 'dark' : 'light')}
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          onNodeDrag={onNodeDrag}
+          onNodeDragStart={onNodeDragStart}
+          fitView
+          proOptions={{ hideAttribution: true }}
+        >
+          <Controls position='bottom-center' orientation='horizontal' />
+          <Background />
+        </ReactFlow>
       </div>
-
-      {/* <SettingNode /> */}
     </Flex>
   );
 };
@@ -188,12 +186,15 @@ function DragGhost({ type, label }: DragGhostProps) {
 
   return (
     <div
-      className={`w-[132px] flex items-center justify-center h-16 bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-[2]`}
+      className={classNames(
+        `w-[132px] flex items-center justify-center h-16 bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-[2]`,
+        type === 'loop-node' ? 'w-[400px] h-[200px]' : 'w-[200px] h-[60px]'
+      )}
       style={{
         transform: `translate(${position.x - 32}px, ${position.y - 112}px) translate(-50%, -50%)`
       }}
     >
-      {label} - {type}
+      {label}
     </div>
   );
 }

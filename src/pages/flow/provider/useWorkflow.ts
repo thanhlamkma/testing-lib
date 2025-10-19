@@ -4,7 +4,7 @@ import { useContext } from 'react';
 export const useWorkflow = () => {
   const context = useContext(WorkflowContext);
 
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useWorkflow must be used within a WorkflowProvider');
   }
 

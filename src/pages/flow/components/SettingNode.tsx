@@ -1,15 +1,17 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Flex, Form, Input, Select } from 'antd';
+import { Flex } from 'antd';
 import classNames from 'classnames';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface SettingNodeProps {
+  title: string;
+  children: ReactNode;
   open: boolean;
   onClose: () => void;
 }
 
-const SettingNode = ({ open, onClose }: SettingNodeProps) => {
+const SettingNode = ({ title, children, open, onClose }: SettingNodeProps) => {
   const settingDivRef = useRef<HTMLElement>(null);
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -36,18 +38,11 @@ const SettingNode = ({ open, onClose }: SettingNodeProps) => {
           justify='space-between'
           gap={16}
         >
-          <h2 className='text-base font-semibold '>Node Setting</h2>
+          <h2 className='text-base font-semibold'>{title} Setting</h2>
           <CloseOutlined className='cursor-pointer' onClick={onClose} />
         </Flex>
-        <Form className='px-4 pb-4' labelCol={{ span: 4 }} labelAlign='left' colon={false}>
-          <Form.Item label='Node Name' name='name'>
-            <Input />
-          </Form.Item>
 
-          <Form.Item label='Test Data' name='testDataId'>
-            <Select />
-          </Form.Item>
-        </Form>
+        {children}
       </Flex>,
       portalRoot
     );

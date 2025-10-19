@@ -6,6 +6,8 @@ interface IWorkflowContext {
   setWorkflowData: Dispatch<SetStateAction<any>>;
   selectedEdges: string[];
   setSelectedEdges: Dispatch<SetStateAction<string[]>>;
+  settingNodeType: string;
+  setSettingNodeType: Dispatch<SetStateAction<string>>;
 }
 
 export const WorkflowContext = createContext<IWorkflowContext | undefined>(undefined);
@@ -13,12 +15,15 @@ export const WorkflowContext = createContext<IWorkflowContext | undefined>(undef
 const WorkflowProvider = ({ children }: { children: ReactNode }) => {
   const [workflowData, setWorkflowData] = useState();
   const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
+  const [settingNodeType, setSettingNodeType] = useState<string>('');
 
   const contextValue = {
     workflowData,
     setWorkflowData,
     selectedEdges,
-    setSelectedEdges
+    setSelectedEdges,
+    settingNodeType,
+    setSettingNodeType
   };
 
   return <WorkflowContext.Provider value={contextValue}>{children}</WorkflowContext.Provider>;

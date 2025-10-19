@@ -1,13 +1,15 @@
 import SettingNode from '@/pages/flow/components/SettingNode';
 import { CloseOutlined } from '@ant-design/icons';
 import { Node, NodeProps, NodeResizer, useReactFlow } from '@xyflow/react';
-import { Flex } from 'antd';
-import { useCallback, useState } from 'react';
+import { Flex, Form, Input, Select } from 'antd';
+import { useEffect, useState } from 'react';
 
 export type LoopNodeProps = Node<{ label: string } & Record<string, unknown>>;
 
-const LoopNode = ({ id, data, selected }: NodeProps<LoopNodeProps>) => {
-  const { deleteElements } = useReactFlow();
+const LoopNode = (node: NodeProps<LoopNodeProps>) => {
+  const { id, data, selected } = node;
+
+  const { deleteElements, updateNode } = useReactFlow();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onDelNode = () => {
@@ -16,22 +18,17 @@ const LoopNode = ({ id, data, selected }: NodeProps<LoopNodeProps>) => {
     });
   };
 
-  const onCloseSetting = useCallback(() => {
+  const onCloseSetting = () => {
     setIsOpen(false);
-  }, []);
+    updateNode(id, {
+      ...node,
+      selected: false
+    });
+  };
 
-  // const renderSetting = useMemo(() => {
-  //   const portalRoot = document.getElementById('flow-page');
-  //   return portalRoot
-  //     ? createPortal(
-  //         <SettingNode
-  //           className={classNames(isOpen ? 'enter' : 'exit')}
-  //           onClose={() => setIsOpen(false)}
-  //         />,
-  //         portalRoot
-  //       )
-  //     : null;
-  // }, [isOpen]);
+  useEffect(() => {
+    setIsOpen(selected ?? false);
+  }, [selected]);
 
   return (
     <>
@@ -56,9 +53,17 @@ const LoopNode = ({ id, data, selected }: NodeProps<LoopNodeProps>) => {
         {data.label}
       </Flex>
 
-      <SettingNode open={isOpen} onClose={onCloseSetting} />
+      <SettingNode title='Loop' open={isOpen} onClose={onCloseSetting}>
+        <Form className='px-4 pb-4' labelCol={{ span: 4 }} labelAlign='left' colon={false}>
+          <Form.Item label='Node Name' name='name'>
+            <Input />
+          </Form.Item>
 
-      {/* {renderSetting} */}
+          <Form.Item label='Test Data' name='testDataId'>
+            <Select />
+          </Form.Item>
+        </Form>
+      </SettingNode>
     </>
   );
 };
