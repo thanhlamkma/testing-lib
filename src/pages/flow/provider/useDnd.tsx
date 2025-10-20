@@ -1,4 +1,5 @@
-import { useReactFlow, XYPosition } from '@xyflow/react';
+import { IUnit } from '@/pages/flow/Flow';
+import { Rect, useReactFlow, XYPosition } from '@xyflow/react';
 import {
   createContext,
   Dispatch,
@@ -9,7 +10,13 @@ import {
   useState
 } from 'react';
 
-export type OnDropAction = ({ position }: { position: XYPosition }) => void;
+type OnDropType = {
+  position: XYPosition;
+  canDrop: boolean;
+  // dropNode: Node;
+};
+
+export type OnDropAction = ({ position, canDrop }: OnDropType) => void;
 
 interface DnDContextType {
   // If a node is being dragged.
@@ -49,7 +56,8 @@ export function DnDProvider({ children }: { children: React.ReactNode }) {
 export default DnDContext;
 
 export const useDnD = () => {
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, getIntersectingNodes } = useReactFlow();
+  const [rect, setRect] = useState<Rect>({ height: 0, width: 0, x: 0, y: 0 });
 
   const context = useContext(DnDContext);
 
@@ -63,11 +71,12 @@ export const useDnD = () => {
   // when you want to start dragging a node into the flow.
   // For example, this is used in the `Sidebar` component.
   const onDragStart = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>, onDrop: OnDropAction) => {
+    (event: React.PointerEvent<HTMLDivElement>, rect: Rect, onDrop: OnDropAction) => {
       event.preventDefault();
       (event.target as HTMLElement).setPointerCapture(event.pointerId);
       setIsDragging(true);
       setDropAction(onDrop);
+      setRect(rect);
     },
     [setIsDragging, setDropAction]
   );
@@ -89,12 +98,18 @@ export const useDnD = () => {
       // Only allow dropping on the flow area
       if (isDroppingOnFlow) {
         const flowPosition = screenToFlowPosition({ x: event.clientX, y: event.clientY });
-        dropAction?.({ position: flowPosition });
+        const dragRect: Rect = {
+          ...flowPosition,
+          height: rect.height,
+          width: rect.width
+        };
+        const canDrop = getIntersectingNodes(dragRect).length === 0;
+        dropAction?.({ position: flowPosition, canDrop });
       }
 
       setIsDragging(false);
     },
-    [screenToFlowPosition, setIsDragging, dropAction, isDragging]
+    [screenToFlowPosition, getIntersectingNodes, setIsDragging, dropAction, isDragging, rect]
   );
 
   // Add global touch event listeners
@@ -114,15 +129,32 @@ export const useDnD = () => {
   };
 };
 
-export const useDnDPosition = () => {
+export const useDnDPosition = ({ node }: { node: IUnit }) => {
+  const { screenToFlowPosition, getIntersectingNodes } = useReactFlow();
+
   const [position, setPosition] = useState<XYPosition | undefined>(undefined);
+  const [canDrop, setCanDrop] = useState<boolean>(true);
 
   // By default, the pointer move event sets the position of the dragged element in the context.
   // This will be used to display the `DragGhost` component.
-  const onDrag = useCallback((event: PointerEvent) => {
-    event.preventDefault();
-    setPosition({ x: event.clientX, y: event.clientY });
-  }, []);
+  const onDrag = useCallback(
+    (event: PointerEvent) => {
+      event.preventDefault();
+
+      const screenPosition: XYPosition = { x: event.clientX, y: event.clientY };
+      const flowPosition = screenToFlowPosition(screenPosition);
+      const dragRect: Rect = {
+        ...flowPosition,
+        height: node.height,
+        width: node.width
+      };
+      const checkCanDrop = getIntersectingNodes(dragRect).length === 0;
+
+      setCanDrop(checkCanDrop);
+      setPosition(screenPosition);
+    },
+    [node, getIntersectingNodes, screenToFlowPosition, setCanDrop, setPosition]
+  );
 
   useEffect(() => {
     document.addEventListener('pointermove', onDrag);
@@ -131,5 +163,5 @@ export const useDnDPosition = () => {
     };
   }, [onDrag]);
 
-  return { position };
+  return { position, canDrop };
 };

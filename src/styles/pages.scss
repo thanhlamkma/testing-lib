@@ -215,6 +215,11 @@
   }
 }
 
+.react-flow__node.warning {
+  border: 2px solid red !important;
+  color: white;
+}
+
 @keyframes popIn {
   from {
     transform: translateX(100%);

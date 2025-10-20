@@ -1,26 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Background,
   Controls,
-  NodeTypes,
   ReactFlow,
-  XYPosition,
+  Rect,
   addEdge,
   useEdgesState,
   useNodesState,
   useReactFlow,
+  type Edge,
   type EdgeTypes,
   type Node,
   type OnConnect
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback, useState } from 'react';
+import { MouseEvent, PointerEvent, useCallback, useMemo, useState } from 'react';
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
 import CustomNode from '@/pages/flow/components/CustomNode';
 import LoopNode from '@/pages/flow/components/LoopNode';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
+import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { Flex } from 'antd';
 import classNames from 'classnames';
 import clsx from 'clsx';
@@ -31,16 +31,27 @@ import CustomEdgeStartEnd from './components/CustomEdgeStartEnd';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
+export interface IUnit {
+  id: number;
+  key: number;
+  type: string;
+  data: {
+    label: string;
+  };
+  width: number;
+  height: number;
+}
+
 const Flow = () => {
-  const [nodes, , onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
-  const { setNodes } = useReactFlow();
-
   const themeStore = useRecoilValue(darkThemeStoreState);
-  const { onDragStart, isDragging } = useDnD();
 
-  const [label, setLabel] = useState<string | null>(null);
-  const [type, setType] = useState<string | null>(null);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const { getIntersectingNodes, updateNode } = useReactFlow();
+  const { onDragStart, isDragging } = useDnD();
+  const { setSelectedNode } = useWorkflow();
+
+  const [createdNode, setCreatedNode] = useState<IUnit | null>(null);
 
   // Data
   const nodeTypes = {
@@ -52,14 +63,16 @@ const Flow = () => {
     'start-end': CustomEdgeStartEnd
   };
 
-  const fakeData = [
+  const fakeData: IUnit[] = [
     {
       id: 1,
       key: 1,
       type: 'custom-node',
       data: {
         label: 'Node 1'
-      }
+      },
+      width: 200,
+      height: 60
     },
     {
       id: 2,
@@ -67,7 +80,9 @@ const Flow = () => {
       type: 'custom-node',
       data: {
         label: 'Node 2'
-      }
+      },
+      width: 200,
+      height: 60
     },
     {
       id: 4,
@@ -75,7 +90,9 @@ const Flow = () => {
       type: 'loop-node',
       data: {
         label: 'Loop'
-      }
+      },
+      width: 400,
+      height: 200
     }
   ];
 
@@ -94,23 +111,11 @@ const Flow = () => {
     [setEdges]
   );
 
-  const onNodeDragStart = (e: React.MouseEvent, node: NodeTypes) => {
-    setNodes((nds) =>
-      nds.map((n) => ({
-        ...n,
-        dragStartX: n.position.x,
-        dragStartY: n.position.y
-      }))
-    );
-  };
-
-  const onNodeDrag = (e: React.MouseEvent, node: NodeTypes, nodes: NodeTypes[]) => {
-    // console.log(e, node, nodes);
-  };
-
   const createAddNewNode = useCallback(
-    (node: Node): OnDropAction => {
-      return ({ position }: { position: XYPosition }) => {
+    (node: IUnit): OnDropAction => {
+      return ({ position, canDrop }) => {
+        if (!canDrop) return;
+
         const newNode: Node = {
           id: getId(),
           type: node.type,
@@ -121,15 +126,81 @@ const Flow = () => {
         };
 
         setNodes((nds) => nds.concat(newNode));
-        setType(null);
+        setCreatedNode(null);
       };
     },
-    [setNodes, setType]
+    [setNodes, setCreatedNode]
+  );
+
+  const onPointDown = (event: PointerEvent<HTMLDivElement>, item: IUnit) => {
+    const rect: Rect = { height: item.height, width: item.width, x: 0, y: 0 };
+
+    setCreatedNode(item);
+    onDragStart(event, rect, createAddNewNode(item));
+  };
+
+  // --- Save initial position for all nodes when drag starts ---
+  const onNodeDragStart = useCallback(() => {
+    setNodes((nodes: Node[]) =>
+      nodes.map((n) => ({
+        ...n,
+        data: {
+          ...n.data,
+          dragStartX: n.position.x,
+          dragStartY: n.position.y
+        }
+      }))
+    );
+  }, [setNodes]);
+
+  // --- While dragging: check intersection for each dragged node ---
+  const onNodeDrag = useCallback(
+    (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
+      draggedNodes.forEach((node) => {
+        const hasIntersection = getIntersectingNodes(node).length > 0;
+
+        updateNode(node.id, {
+          ...node,
+          className: hasIntersection ? 'warning' : ''
+        });
+      });
+    },
+    [updateNode, getIntersectingNodes]
+  );
+
+  // --- On drag stop: reset overlapping nodes to original positions ---
+  const onNodeDragStop = useCallback(
+    (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
+      draggedNodes.forEach((node) => {
+        const isInvalid = node.className?.includes('warning');
+
+        if (isInvalid) {
+          const { dragStartX = 0, dragStartY = 0 } = node.data || {};
+          updateNode(node.id, {
+            ...node,
+            className: '',
+            position: { x: Number(dragStartX), y: Number(dragStartY) }
+          });
+        }
+      });
+    },
+    [updateNode]
+  );
+
+  const onNodeClick = useCallback(
+    (e: MouseEvent, node: Node) => {
+      if (!e.ctrlKey) {
+        setSelectedNode(node);
+      } else {
+        setSelectedNode(null);
+      }
+    },
+    [setSelectedNode]
   );
 
   return (
     <Flex id='flow-page' className='relative h-full rounded-xl flow-page' gap={16}>
-      {isDragging && <DragGhost label={label} type={type} />}
+      {isDragging && createdNode && <DragGhost unitData={createdNode} />}
 
       <Flex
         className='absolute top-4 left-4 z-[1] h-[calc(100%-28px)] bg-[rgba(var(--bg-main)/1)] p-4 rounded-lg'
@@ -139,12 +210,10 @@ const Flow = () => {
         {fakeData.map((item) => (
           <div
             key={item.key}
-            className='w-[200px] h-[60px] flex items-center justify-center border border-solid rounded border-neutral-400 bg-white'
-            onPointerDown={(event) => {
-              setType(item.type);
-              setLabel(item.data?.label ?? '');
-              onDragStart(event, createAddNewNode(item as any));
-            }}
+            className={classNames(
+              'w-[200px] h-[60px] flex items-center justify-center border border-solid rounded border-neutral-400 bg-white'
+            )}
+            onPointerDown={(e) => onPointDown(e, item)}
           >
             {item.data?.label}
           </div>
@@ -153,6 +222,7 @@ const Flow = () => {
 
       <div className='z-0 flex-1'>
         <ReactFlow
+          fitView
           className={clsx('workflow rounded-xl z-0', themeStore ? 'dark' : 'light')}
           nodes={nodes}
           edges={edges}
@@ -161,9 +231,10 @@ const Flow = () => {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
-          onNodeDrag={onNodeDrag}
           onNodeDragStart={onNodeDragStart}
-          fitView
+          onNodeDrag={onNodeDrag}
+          onNodeDragStop={onNodeDragStop}
+          onNodeClick={onNodeClick}
           proOptions={{ hideAttribution: true }}
         >
           <Controls position='bottom-center' orientation='horizontal' />
@@ -175,26 +246,40 @@ const Flow = () => {
 };
 
 interface DragGhostProps {
-  label: string | null;
-  type: string | null;
+  unitData: IUnit;
 }
 
-function DragGhost({ type, label }: DragGhostProps) {
-  const { position } = useDnDPosition();
+function DragGhost({ unitData }: DragGhostProps) {
+  const { data, type } = unitData;
+
+  const { getZoom } = useReactFlow();
+  const { position, canDrop } = useDnDPosition({ node: unitData });
+
+  const zoom = getZoom();
+  const sizeOfNode = useMemo(() => {
+    const nodeWidth = type === 'loop-node' ? 400 : 200;
+    const nodeHeight = type === 'loop-node' ? 200 : 60;
+
+    return {
+      width: nodeWidth * zoom,
+      height: nodeHeight * zoom
+    };
+  }, [type, zoom]);
 
   if (!position) return null;
 
   return (
     <div
       className={classNames(
-        `w-[132px] flex items-center justify-center h-16 bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-[2]`,
-        type === 'loop-node' ? 'w-[400px] h-[200px]' : 'w-[200px] h-[60px]'
+        `flex items-center justify-center bg-white border border-solid rounded border-neutral-400 fixed pointer-events-none z-[2]`,
+        canDrop ? '' : 'border-red-500 cursor-not-allowed'
       )}
       style={{
-        transform: `translate(${position.x - 32}px, ${position.y - 112}px) translate(-50%, -50%)`
+        ...sizeOfNode,
+        transform: `translate(${position.x - 12}px, ${position.y - 109}px)`
       }}
     >
-      {label}
+      {data.label}
     </div>
   );
 }

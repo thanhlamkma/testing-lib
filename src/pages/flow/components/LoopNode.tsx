@@ -1,4 +1,5 @@
 import SettingNode from '@/pages/flow/components/SettingNode';
+import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { CloseOutlined } from '@ant-design/icons';
 import { Node, NodeProps, NodeResizer, useReactFlow } from '@xyflow/react';
 import { Flex, Form, Input, Select } from 'antd';
@@ -10,6 +11,8 @@ const LoopNode = (node: NodeProps<LoopNodeProps>) => {
   const { id, data, selected } = node;
 
   const { deleteElements, updateNode } = useReactFlow();
+  const { selectedNode } = useWorkflow();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onDelNode = () => {
@@ -27,8 +30,8 @@ const LoopNode = (node: NodeProps<LoopNodeProps>) => {
   };
 
   useEffect(() => {
-    setIsOpen(selected ?? false);
-  }, [selected]);
+    setIsOpen(Boolean(selectedNode?.id === id && selected));
+  }, [selectedNode, selected, id]);
 
   return (
     <>

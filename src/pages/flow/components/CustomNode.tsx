@@ -1,4 +1,5 @@
 import SettingNode from '@/pages/flow/components/SettingNode';
+import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { CloseOutlined } from '@ant-design/icons';
 import { Node, NodeProps, useReactFlow } from '@xyflow/react';
 import { Flex } from 'antd';
@@ -8,7 +9,10 @@ export type CustomNodeProps = Node<{ label: string } & Record<string, unknown>>;
 
 const CustomNode = (node: NodeProps<CustomNodeProps>) => {
   const { id, selected, data } = node;
+
   const { updateNode, deleteElements } = useReactFlow();
+  const { selectedNode } = useWorkflow();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onDelNode = () => {
@@ -26,8 +30,8 @@ const CustomNode = (node: NodeProps<CustomNodeProps>) => {
   };
 
   useEffect(() => {
-    setIsOpen(selected ?? false);
-  }, [selected]);
+    setIsOpen(Boolean(selectedNode?.id === id && selected));
+  }, [selectedNode, selected, id]);
 
   return (
     <>
