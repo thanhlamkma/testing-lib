@@ -46,7 +46,7 @@ const SettingNode = ({ title, children, open, onClose }: SettingNodeProps) => {
       </Flex>,
       portalRoot
     );
-  }, [onClose, phase, portalRoot, visible]);
+  }, [onClose, phase, portalRoot, visible, children, title]);
 
   useEffect(() => {
     if (open) {

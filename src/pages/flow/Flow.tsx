@@ -17,6 +17,7 @@ import { MouseEvent, PointerEvent, useCallback, useMemo, useState } from 'react'
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
+import CustomEdge2 from '@/pages/flow/components/CustomEdge2';
 import CustomNode from '@/pages/flow/components/CustomNode';
 import LoopNode from '@/pages/flow/components/LoopNode';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
@@ -60,7 +61,8 @@ const Flow = () => {
   };
   const edgeTypes: EdgeTypes = {
     custom: CustomEdge,
-    'start-end': CustomEdgeStartEnd
+    'start-end': CustomEdgeStartEnd,
+    'custom-edge2': CustomEdge2
   };
 
   const fakeData: IUnit[] = [
@@ -98,16 +100,22 @@ const Flow = () => {
 
   // Actions
   const onConnect: OnConnect = useCallback(
-    (params) =>
-      setEdges((eds) =>
+    (params) => {
+      // Check type of source and target node for add edge
+      console.log('🚀 ~ Flow ~ params:', params);
+      return setEdges((eds) =>
         addEdge(
           {
             ...params,
-            type: 'custom'
+            type: 'custom-edge2',
+            data: {
+              curve: true
+            }
           },
           eds
         )
-      ),
+      );
+    },
     [setEdges]
   );
 
