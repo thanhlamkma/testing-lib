@@ -1,3 +1,4 @@
+import { CustomHandle } from '@/pages/flow/components/CustomHandle';
 import SettingNode from '@/pages/flow/components/SettingNode';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { CloseOutlined } from '@ant-design/icons';
@@ -29,6 +30,8 @@ const CustomNode = (node: NodeProps<CustomNodeProps>) => {
     });
   };
 
+  const onAddNode = () => {};
+
   useEffect(() => {
     setIsOpen(Boolean(selectedNode?.id === id && selected));
   }, [selectedNode, selected, id]);
@@ -44,7 +47,7 @@ const CustomNode = (node: NodeProps<CustomNodeProps>) => {
       <SettingNode title='Custom Node' open={isOpen} onClose={onCloseSetting}>
         <Flex className='px-4 pb-4'>Setting for {data.label}</Flex>
       </SettingNode>
-      <Handle type='source' position={Position.Right} />
+      <CustomHandle id='b' type='source' position={Position.Right} onAddNode={onAddNode} />
     </>
   );
 };
