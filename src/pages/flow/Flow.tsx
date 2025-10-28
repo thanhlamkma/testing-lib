@@ -1,8 +1,10 @@
 import {
   Background,
   Controls,
+  MarkerType,
   ReactFlow,
   Rect,
+  XYPosition,
   addEdge,
   useEdgesState,
   useNodesState,
@@ -20,6 +22,8 @@ import { darkThemeStoreState } from '@/common/stores/ThemeStore';
 import CustomEdge2 from '@/pages/flow/components/CustomEdge2';
 import CustomNode from '@/pages/flow/components/CustomNode';
 import LoopNode from '@/pages/flow/components/LoopNode';
+import NodeAdd from '@/pages/flow/components/NodeAdd';
+import NodeStartEnd from '@/pages/flow/components/NodeStartEnd';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { Flex } from 'antd';
@@ -30,7 +34,8 @@ import CustomEdge from './components/CustomEdge';
 import CustomEdgeStartEnd from './components/CustomEdgeStartEnd';
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getNodeId = () => `flow-node-${id++}`;
+const getEdgeId = () => `flow-edge-${id++}`;
 
 export interface IUnit {
   id: number;
@@ -43,11 +48,60 @@ export interface IUnit {
   height: number;
 }
 
+const nodeTypes = {
+  'loop-node': LoopNode,
+  'custom-node': CustomNode,
+  'node-add': NodeAdd,
+  'node-start-end': NodeStartEnd
+};
+const edgeTypes: EdgeTypes = {
+  custom: CustomEdge,
+  'start-end': CustomEdgeStartEnd,
+  'custom-edge2': CustomEdge2
+};
+
+const initialNodes: Node[] = [
+  {
+    id: getNodeId(),
+    type: 'node-start-end',
+    position: {
+      x: 0,
+      y: 0
+    },
+    width: 100,
+    height: 40,
+    data: { label: `START`, type: 'start' }
+  },
+  {
+    id: getNodeId(),
+    type: 'node-add',
+    position: {
+      x: 200,
+      y: 0
+    },
+    width: 40,
+    height: 40,
+    data: { label: '+' }
+  }
+];
+
+const initialEdges: Edge[] = [
+  {
+    id: getEdgeId(),
+    type: 'custom',
+    source: initialNodes[0].id,
+    target: initialNodes[1].id,
+    markerEnd: {
+      type: MarkerType.Arrow
+    }
+  }
+];
+
 const Flow = () => {
   const themeStore = useRecoilValue(darkThemeStoreState);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialEdges);
   const { getIntersectingNodes, updateNode } = useReactFlow();
   const { onDragStart, isDragging } = useDnD();
   const { setSelectedNode } = useWorkflow();
@@ -55,16 +109,6 @@ const Flow = () => {
   const [createdNode, setCreatedNode] = useState<IUnit | null>(null);
 
   // Data
-  const nodeTypes = {
-    'loop-node': LoopNode,
-    'custom-node': CustomNode
-  };
-  const edgeTypes: EdgeTypes = {
-    custom: CustomEdge,
-    'start-end': CustomEdgeStartEnd,
-    'custom-edge2': CustomEdge2
-  };
-
   const fakeData: IUnit[] = [
     {
       id: 1,
@@ -119,21 +163,36 @@ const Flow = () => {
     [setEdges]
   );
 
+  const genNodeAdd = (position: XYPosition) => {
+    return {
+      id: getNodeId(),
+      type: 'node-add',
+      position,
+      width: 40,
+      height: 40,
+      data: { label: '+' }
+    };
+  };
+
   const createAddNewNode = useCallback(
     (node: IUnit): OnDropAction => {
       return ({ position, canDrop }) => {
         if (!canDrop) return;
 
         const newNode: Node = {
-          id: getId(),
+          id: getNodeId(),
           type: node.type,
           position,
           width: node.type === 'loop-node' ? 400 : 200,
           height: node.type === 'loop-node' ? 200 : 60,
           data: { label: `${node.data.label}` }
         };
+        const newNodeAdd = genNodeAdd({
+          x: (newNode?.width ?? 0) / 2 + 20,
+          y: position.y + (newNode?.height ?? 0) + 100
+        });
 
-        setNodes((nds) => nds.concat(newNode));
+        setNodes((nds) => nds.concat([newNode, newNodeAdd]));
         setCreatedNode(null);
       };
     },
