@@ -1,4 +1,4 @@
-import SettingNode from '@/pages/flow/components/SettingNode';
+import SettingNode from '@/pages/flow/components/nodes/SettingNode';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { CloseOutlined } from '@ant-design/icons';
 import { Handle, Node, NodeProps, Position, useReactFlow } from '@xyflow/react';

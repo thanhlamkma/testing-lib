@@ -1,5 +1,5 @@
 import useOnClickOutside from '@/core/hooks/useOnClickOutside';
-import PopoverPortal from '@/pages/flow/components/PopoverPortal';
+import PopoverPortal from '@/pages/flow/components/tools/PopoverPortal';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { getBezierPath, type Edge, type EdgeProps } from '@xyflow/react';
 import { Button, Flex } from 'antd';

@@ -19,19 +19,19 @@ import { MouseEvent, PointerEvent, useCallback, useMemo, useState } from 'react'
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
-import CustomEdge2 from '@/pages/flow/components/CustomEdge2';
-import CustomNode from '@/pages/flow/components/CustomNode';
-import LoopNode from '@/pages/flow/components/LoopNode';
-import NodeAdd from '@/pages/flow/components/NodeAdd';
-import NodeStartEnd from '@/pages/flow/components/NodeStartEnd';
+import CustomEdge2 from '@/pages/flow/components/edges/CustomEdge2';
+import CustomNode from '@/pages/flow/components/nodes/CustomNode';
+import LoopNode from '@/pages/flow/components/nodes/LoopNode';
+import NodeAdd from '@/pages/flow/components/nodes/NodeAdd';
+import NodeStartEnd from '@/pages/flow/components/nodes/NodeStartEnd';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
 import { Flex } from 'antd';
 import classNames from 'classnames';
 import clsx from 'clsx';
 import { useRecoilValue } from 'recoil';
-import CustomEdge from './components/CustomEdge';
-import CustomEdgeStartEnd from './components/CustomEdgeStartEnd';
+import CustomEdge from './components/edges/CustomEdge';
+import CustomEdgeStartEnd from './components/edges/CustomEdgeStartEnd';
 
 let id = 0;
 const getNodeId = () => `flow-node-${id++}`;
