@@ -20,12 +20,11 @@ import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
 import CustomEdge2 from '@/pages/flow/components/edges/CustomEdge2';
-import CustomNode from '@/pages/flow/components/nodes/CustomNode';
-import LoopNode from '@/pages/flow/components/nodes/LoopNode';
-import NodeAdd from '@/pages/flow/components/nodes/NodeAdd';
-import NodeStartEnd from '@/pages/flow/components/nodes/NodeStartEnd';
+import useNodeRegister from '@/pages/flow/hooks/useNodeRegister';
+import { FlowNodeType } from '@/pages/flow/models/NodeRegister';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
 import { useWorkflow } from '@/pages/flow/provider/useWorkflow';
+import { nodeRegisters } from '@/pages/flow/registry/nodeRegisters';
 import { Flex } from 'antd';
 import classNames from 'classnames';
 import clsx from 'clsx';
@@ -48,12 +47,12 @@ export interface IUnit {
   height: number;
 }
 
-const nodeTypes = {
-  'loop-node': LoopNode,
-  'custom-node': CustomNode,
-  'node-add': NodeAdd,
-  'node-start-end': NodeStartEnd
-};
+// const nodeTypes = {
+//   [FlowNodeType.LOOP]: LoopNode,
+//   [FlowNodeType.CUSTOM]: CustomNode,
+//   [FlowNodeType.ADD]: NodeAdd,
+//   [FlowNodeType.START_END]: NodeStartEnd,
+// };
 const edgeTypes: EdgeTypes = {
   custom: CustomEdge,
   'start-end': CustomEdgeStartEnd,
@@ -63,7 +62,7 @@ const edgeTypes: EdgeTypes = {
 const initialNodes: Node[] = [
   {
     id: getNodeId(),
-    type: 'node-start-end',
+    type: FlowNodeType.START_END,
     position: {
       x: 0,
       y: 0
@@ -74,7 +73,7 @@ const initialNodes: Node[] = [
   },
   {
     id: getNodeId(),
-    type: 'node-add',
+    type: FlowNodeType.ADD,
     position: {
       x: 200,
       y: 0
@@ -105,6 +104,10 @@ const Flow = () => {
   const { getIntersectingNodes, updateNode } = useReactFlow();
   const { onDragStart, isDragging } = useDnD();
   const { setSelectedNode } = useWorkflow();
+  const {
+    nodeTypes,
+    handler: { onNodeDragStop }
+  } = useNodeRegister(nodeRegisters);
 
   const [createdNode, setCreatedNode] = useState<IUnit | null>(null);
 
@@ -113,7 +116,7 @@ const Flow = () => {
     {
       id: 1,
       key: 1,
-      type: 'custom-node',
+      type: FlowNodeType.CUSTOM,
       data: {
         label: 'Node 1'
       },
@@ -123,7 +126,7 @@ const Flow = () => {
     {
       id: 2,
       key: 2,
-      type: 'custom-node',
+      type: FlowNodeType.CUSTOM,
       data: {
         label: 'Node 2'
       },
@@ -133,7 +136,7 @@ const Flow = () => {
     {
       id: 4,
       key: 4,
-      type: 'loop-node',
+      type: FlowNodeType.LOOP,
       data: {
         label: 'Loop'
       },
@@ -166,7 +169,7 @@ const Flow = () => {
   const genNodeAdd = (position: XYPosition) => {
     return {
       id: getNodeId(),
-      type: 'node-add',
+      type: FlowNodeType.ADD,
       position,
       width: 40,
       height: 40,
@@ -183,8 +186,8 @@ const Flow = () => {
           id: getNodeId(),
           type: node.type,
           position,
-          width: node.type === 'loop-node' ? 400 : 200,
-          height: node.type === 'loop-node' ? 200 : 60,
+          width: node.type === FlowNodeType.LOOP ? 400 : 200,
+          height: node.type === FlowNodeType.LOOP ? 200 : 60,
           data: { label: `${node.data.label}` }
         };
         const newNodeAdd = genNodeAdd({
@@ -236,23 +239,23 @@ const Flow = () => {
   );
 
   // --- On drag stop: reset overlapping nodes to original positions ---
-  const onNodeDragStop = useCallback(
-    (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
-      draggedNodes.forEach((node) => {
-        const isInvalid = node.className?.includes('warning');
+  // const onNodeDragStop = useCallback(
+  //   (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
+  //     draggedNodes.forEach((node) => {
+  //       const isInvalid = node.className?.includes('warning');
 
-        if (isInvalid) {
-          const { dragStartX = 0, dragStartY = 0 } = node.data || {};
-          updateNode(node.id, {
-            ...node,
-            className: '',
-            position: { x: Number(dragStartX), y: Number(dragStartY) }
-          });
-        }
-      });
-    },
-    [updateNode]
-  );
+  //       if (isInvalid) {
+  //         const { dragStartX = 0, dragStartY = 0 } = node.data || {};
+  //         updateNode(node.id, {
+  //           ...node,
+  //           className: '',
+  //           position: { x: Number(dragStartX), y: Number(dragStartY) }
+  //         });
+  //       }
+  //     });
+  //   },
+  //   [updateNode]
+  // );
 
   const onNodeClick = useCallback(
     (e: MouseEvent, node: Node) => {
@@ -302,6 +305,8 @@ const Flow = () => {
           onNodeDrag={onNodeDrag}
           onNodeDragStop={onNodeDragStop}
           onNodeClick={onNodeClick}
+          multiSelectionKeyCode={null} // Prevent multi select nodes
+          selectionKeyCode={null} // Prevent pan the viewport to select
           proOptions={{ hideAttribution: true }}
         >
           <Controls position='bottom-center' orientation='horizontal' />
@@ -324,8 +329,8 @@ function DragGhost({ unitData }: DragGhostProps) {
 
   const zoom = getZoom();
   const sizeOfNode = useMemo(() => {
-    const nodeWidth = type === 'loop-node' ? 400 : 200;
-    const nodeHeight = type === 'loop-node' ? 200 : 60;
+    const nodeWidth = type === FlowNodeType.LOOP ? 400 : 200;
+    const nodeHeight = type === FlowNodeType.LOOP ? 200 : 60;
 
     return {
       width: nodeWidth * zoom,
