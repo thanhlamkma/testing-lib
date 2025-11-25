@@ -19,7 +19,7 @@ import { MouseEvent, PointerEvent, useCallback, useMemo, useState } from 'react'
 import './styles/index.scss';
 
 import { darkThemeStoreState } from '@/common/stores/ThemeStore';
-import CustomEdge2 from '@/pages/flow/components/edges/CustomEdge2';
+import NonTouchBezierEdge from '@/pages/flow/components/edges/NonTouchingBezierEdge';
 import useNodeRegister from '@/pages/flow/hooks/useNodeRegister';
 import { FlowNodeType } from '@/pages/flow/models/NodeRegister';
 import { OnDropAction, useDnD, useDnDPosition } from '@/pages/flow/provider/useDnd';
@@ -29,7 +29,6 @@ import { Flex } from 'antd';
 import classNames from 'classnames';
 import clsx from 'clsx';
 import { useRecoilValue } from 'recoil';
-import CustomEdge from './components/edges/CustomEdge';
 import CustomEdgeStartEnd from './components/edges/CustomEdgeStartEnd';
 
 let id = 0;
@@ -54,9 +53,10 @@ export interface IUnit {
 //   [FlowNodeType.START_END]: NodeStartEnd,
 // };
 const edgeTypes: EdgeTypes = {
-  custom: CustomEdge,
-  'start-end': CustomEdgeStartEnd,
-  'custom-edge2': CustomEdge2
+  // custom: CustomEdge,
+  custom: NonTouchBezierEdge,
+  'start-end': CustomEdgeStartEnd
+  // custom: CustomEdge2
 };
 
 const initialNodes: Node[] = [
@@ -154,10 +154,7 @@ const Flow = () => {
         addEdge(
           {
             ...params,
-            type: 'custom-edge2',
-            data: {
-              curve: true
-            }
+            type: 'custom'
           },
           eds
         )

@@ -1,13 +1,6 @@
 import { BaseEdge, EdgeLabelRenderer, EdgeProps, getSmoothStepPath } from '@xyflow/react';
 import React from 'react';
 
-/**
- * CustomEdge - cho phép edge vẽ xuyên qua node cha, với 2 mode: straight hoặc smooth
- *
- * Props mặc định của React Flow:
- * - sourceX, sourceY, targetX, targetY: tọa độ đầu - cuối
- * - markerEnd: mũi tên kết thúc
- */
 const CustomEdge2 = ({
   id,
   sourceX,
@@ -20,22 +13,15 @@ const CustomEdge2 = ({
   selected,
   data
 }: EdgeProps) => {
-  // chọn kiểu vẽ: "straight" hoặc "smooth"
-  const type = data?.curve ? 'smooth' : 'straight';
-
-  // 1️⃣ Tính path
-  const path =
-    type === 'smooth'
-      ? getSmoothStepPath({
-          sourceX,
-          sourceY,
-          sourcePosition,
-          targetX,
-          targetY,
-          targetPosition,
-          borderRadius: 16
-        })[0]
-      : `M${sourceX},${sourceY} L${targetX},${targetY}`;
+  const path = getSmoothStepPath({
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+    borderRadius: 16
+  })[0];
 
   return (
     <>
