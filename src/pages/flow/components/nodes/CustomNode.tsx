@@ -35,7 +35,7 @@ const CustomNode = (node: NodeProps<CustomNodeProps>) => {
 
   return (
     <>
-      <Handle type='target' position={Position.Left} />
+      <Handle id='custom-source-left' type='source' position={Position.Left} />
       <Flex className='relative bg-transparent w-[200px] h-[60px]' align='center' justify='center'>
         <CloseOutlined className='absolute cursor-pointer -top-1 right-2' onClick={onDelNode} />
         {data.label}
@@ -44,7 +44,7 @@ const CustomNode = (node: NodeProps<CustomNodeProps>) => {
       <SettingNode title='Custom Node' open={isOpen} onClose={onCloseSetting}>
         <Flex className='px-4 pb-4'>Setting for {data.label}</Flex>
       </SettingNode>
-      <Handle type='source' position={Position.Right} />
+      <Handle id='custom-source-right' type='source' position={Position.Right} />
 
       {/* <CustomHandle id='b' type='source' position={Position.Right} onAddNode={onAddNode} /> */}
     </>

@@ -15,9 +15,9 @@ const NodeStartEnd = ({ data }: NodeStartEndProps) => {
   return (
     <>
       {isStart ? (
-        <Handle type='source' position={Position.Right} />
+        <Handle id='start-end-source' type='source' position={Position.Right} />
       ) : (
-        <Handle type='target' position={Position.Left} />
+        <Handle id='start-end-target' type='target' position={Position.Left} />
       )}
 
       <span className='font-semibold'>{label}</span>

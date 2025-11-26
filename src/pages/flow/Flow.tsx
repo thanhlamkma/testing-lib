@@ -1,5 +1,6 @@
 import {
   Background,
+  ConnectionMode,
   Controls,
   MarkerType,
   ReactFlow,
@@ -305,6 +306,7 @@ const Flow = () => {
           multiSelectionKeyCode={null} // Prevent multi select nodes
           selectionKeyCode={null} // Prevent pan the viewport to select
           proOptions={{ hideAttribution: true }}
+          connectionMode={ConnectionMode.Loose}
         >
           <Controls position='bottom-center' orientation='horizontal' />
           <Background />

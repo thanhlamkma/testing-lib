@@ -26,9 +26,9 @@ const NonTouchBezierEdge = ({
 
   const path = useMemo(() => {
     const sourceNode = getNode(source);
-    console.log('🚀 ~ NonTouchBezierEdge ~ sourceNode:', sourceNode);
+    // console.log('🚀 ~ NonTouchBezierEdge ~ sourceNode:', sourceNode);
     const targetNode = getNode(target);
-    console.log('🚀 ~ NonTouchBezierEdge ~ targetNode:', targetNode);
+    // console.log('🚀 ~ NonTouchBezierEdge ~ targetNode:', targetNode);
 
     if (!sourceNode || !targetNode) return '';
 
