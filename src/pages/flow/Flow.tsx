@@ -107,7 +107,7 @@ const Flow = () => {
   const { setSelectedNode } = useWorkflow();
   const {
     nodeTypes,
-    handler: { onNodeDragStop }
+    handler: { onNodeDragStart, onNodeDrag, onNodeDragStop }
   } = useNodeRegister(nodeRegisters);
 
   const [createdNode, setCreatedNode] = useState<IUnit | null>(null);
@@ -193,7 +193,7 @@ const Flow = () => {
           y: position.y + (newNode?.height ?? 0) + 100
         });
 
-        setNodes((nds) => nds.concat([newNode, newNodeAdd]));
+        setNodes((nds) => nds.concat([newNode]));
         setCreatedNode(null);
       };
     },
@@ -208,33 +208,33 @@ const Flow = () => {
   };
 
   // --- Save initial position for all nodes when drag starts ---
-  const onNodeDragStart = useCallback(() => {
-    setNodes((nodes: Node[]) =>
-      nodes.map((n) => ({
-        ...n,
-        data: {
-          ...n.data,
-          dragStartX: n.position.x,
-          dragStartY: n.position.y
-        }
-      }))
-    );
-  }, [setNodes]);
+  // const onNodeDragStart = useCallback(() => {
+  //   setNodes((nodes: Node[]) =>
+  //     nodes.map((n) => ({
+  //       ...n,
+  //       data: {
+  //         ...n.data,
+  //         dragStartX: n.position.x,
+  //         dragStartY: n.position.y
+  //       }
+  //     }))
+  //   );
+  // }, [setNodes]);
 
   // --- While dragging: check intersection for each dragged node ---
-  const onNodeDrag = useCallback(
-    (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
-      draggedNodes.forEach((node) => {
-        const hasIntersection = getIntersectingNodes(node).length > 0;
+  // const onNodeDrag = useCallback(
+  //   (_: MouseEvent, __: Node, draggedNodes: Node[]) => {
+  //     draggedNodes.forEach((node) => {
+  //       const hasIntersection = getIntersectingNodes(node).length > 0;
 
-        updateNode(node.id, {
-          ...node,
-          className: hasIntersection ? 'warning' : ''
-        });
-      });
-    },
-    [updateNode, getIntersectingNodes]
-  );
+  //       updateNode(node.id, {
+  //         ...node,
+  //         className: hasIntersection ? 'warning' : ''
+  //       });
+  //     });
+  //   },
+  //   [updateNode, getIntersectingNodes]
+  // );
 
   // --- On drag stop: reset overlapping nodes to original positions ---
   // const onNodeDragStop = useCallback(
