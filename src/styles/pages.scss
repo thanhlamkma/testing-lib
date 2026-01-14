@@ -518,4 +518,10 @@
       display: none;
     }
   }
+
+  .augment-select {
+    .ant-select-selector {
+      border: none;
+    }
+  }
 }
