@@ -6,10 +6,14 @@ import createI18n from '@/core/localization/createI18n';
 import { LoadingProvider } from '@/core/providers/LoadingProvider';
 import router from '@/routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const App = () => {
   const i18n = createI18n(i18nOption);
