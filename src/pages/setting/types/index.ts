@@ -97,3 +97,7 @@ export const functionOptions: OptionType[] = [
     type: VALUE_TYPE.FUNCTION
   }
 ];
+
+export const recordedOptions = [
+  { label: 'Recorded Data', value: 'recorded', type: VALUE_TYPE.RECORDED_DATA }
+];

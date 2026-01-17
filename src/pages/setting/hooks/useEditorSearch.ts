@@ -29,8 +29,7 @@ export const useEditorSearch = () => {
       setOptions([{ label: 'Recorded Data', value: 'recorded', type: VALUE_TYPE.RECORDED_DATA }]);
 
     const rect = range.getBoundingClientRect();
-    console.log('🚀 ~ handleInput ~ rect:', rect);
-    setPosition({ x: rect.height, y: rect.bottom + 4 });
+    setPosition({ x: rect.x, y: rect.bottom + 4 });
     setOpen(true);
   };
 

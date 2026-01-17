@@ -524,4 +524,31 @@
       border: none;
     }
   }
+
+  /* Header & Body collapsed */
+  .collapsed-column {
+    text-align: center;
+    vertical-align: middle;
+
+    &:hover {
+      background: #e6f4ff;
+      cursor: pointer;
+    }
+  }
+
+  /* Header content */
+  .collapsed-column .header-content {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
