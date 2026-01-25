@@ -1,4 +1,6 @@
 import ResizableHeaderCell, { MIN_WIDTH_COL } from '@/pages/setting/components/ResizableHeaderCell';
+import TagInput from '@/pages/setting/components/TagInput';
+import TransformInputV2, { TransformNodeV2 } from '@/pages/setting/components/TransformInput2';
 import {
   functionOptions,
   recordedOptions,
@@ -381,7 +383,7 @@ const Setting = () => {
       width: 220,
       render: (value) => <TransformCellRender data={value} />
     },
-    { title: 'Variable', dataIndex: 'variableId', width: 160 },
+    { title: 'Variable', dataIndex: 'variableId', width: 160, render: () => <TagInput /> },
     { title: 'Exist', dataIndex: 'existVariableId', width: 160 }
   ];
 
@@ -423,6 +425,33 @@ const Setting = () => {
     return mapped;
   }, [columns, handleResize]);
 
+  const [transformData, setTransformData] = useState<{ root: TransformNodeV2 | null }>({
+    root: {
+      type: 'function',
+      functionId: 'ifElse',
+      args: [
+        {
+          type: 'hashtag',
+          value: 'Input'
+        },
+        {
+          type: 'function',
+          functionId: 'concat',
+          args: [
+            {
+              type: 'variable',
+              variableId: 'Order Number'
+            },
+            {
+              type: 'hashtag',
+              value: 'Input'
+            }
+          ]
+        }
+      ]
+    }
+  });
+
   return (
     <Flex className='setting' align='center' vertical gap={16}>
       <Table
@@ -439,6 +468,17 @@ const Setting = () => {
         dataSource={data}
         pagination={false}
       />
+
+      <Flex gap={12}>
+        <TransformInputV2
+          value={transformData.root}
+          onChange={(val) => setTransformData({ root: val })}
+        />
+
+        <pre className='p-4 mt-2 overflow-auto text-green-400 bg-gray-800 rounded max-h-96'>
+          {JSON.stringify(transformData, null, 2)}
+        </pre>
+      </Flex>
     </Flex>
   );
 };
