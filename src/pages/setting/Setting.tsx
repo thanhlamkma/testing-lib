@@ -1,13 +1,14 @@
-import ResizableHeaderCell, { MIN_WIDTH_COL } from '@/pages/setting/components/ResizableHeaderCell';
+import { MIN_WIDTH_COL } from '@/pages/setting/components/ResizableHeaderCell';
 import TagInput from '@/pages/setting/components/TagInput';
-import TransformInputV2, { TransformNodeV2 } from '@/pages/setting/components/TransformInput2';
+import { TransformNodeV2 } from '@/pages/setting/components/TransformInput2';
+import TransformInputInline from '@/pages/setting/components/TransformInputInline';
 import {
   functionOptions,
   recordedOptions,
   VALUE_TYPE,
   variableOptions
 } from '@/pages/setting/types';
-import { Flex, Table } from 'antd';
+import { Flex } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -454,7 +455,7 @@ const Setting = () => {
 
   return (
     <Flex className='setting' align='center' vertical gap={16}>
-      <Table
+      {/* <Table
         className='w-[500px]'
         components={{
           header: {
@@ -467,10 +468,10 @@ const Setting = () => {
         columns={cols}
         dataSource={data}
         pagination={false}
-      />
+      /> */}
 
-      <Flex gap={12}>
-        <TransformInputV2
+      <Flex vertical gap={12}>
+        <TransformInputInline
           value={transformData.root}
           onChange={(val) => setTransformData({ root: val })}
         />
